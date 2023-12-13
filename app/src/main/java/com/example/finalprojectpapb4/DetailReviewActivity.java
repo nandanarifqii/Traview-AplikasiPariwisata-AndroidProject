@@ -1,5 +1,6 @@
 package com.example.finalprojectpapb4;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,9 +22,6 @@ public class DetailReviewActivity extends AppCompatActivity {
     private TextView dateTextView;
     private TextView userReviewTextView;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -37,5 +35,10 @@ public class DetailReviewActivity extends AppCompatActivity {
         locationTextView = findViewById(R.id.location);
         dateTextView = findViewById(R.id.date);
         userReviewTextView = findViewById(R.id.user_review);
+
+        backButton.setOnClickListener(_view -> {
+            Intent intent = new Intent(DetailReviewActivity.this, HomeActivity.class);
+            startActivity(intent);
+        });
     }
 }

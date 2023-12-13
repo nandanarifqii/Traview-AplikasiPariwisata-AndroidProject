@@ -25,6 +25,7 @@
             android:textSize="24sp"></TextView>
 
         <ImageButton
+            android:id="@+id/search_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -105,4 +106,4 @@
             android:backgroundTint="@color/blue"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-
+</androidx.constraintlayout.widget.ConstraintLayout>

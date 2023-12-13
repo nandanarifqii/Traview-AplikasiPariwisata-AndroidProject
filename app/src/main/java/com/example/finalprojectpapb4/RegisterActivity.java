@@ -39,7 +39,11 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         Button registerButton = findViewById(R.id.btn_login);
-        registerButton.setOnClickListener(view -> registerUser());
+//        registerButton.setOnClickListener(view -> registerUser());
+        registerButton.setOnClickListener(_view -> {
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+        });
 
         Button googleSignInButton = findViewById(R.id.btn_google);
 

@@ -9,6 +9,7 @@ import android.widget.Button;
 
 public class ProfileActivity extends AppCompatActivity {
     Button btnEdit;
+    Button btnKeluar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,12 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }
+        });
+
+        btnKeluar = findViewById(R.id.btn_keluar);
+        btnEdit.setOnClickListener(_view -> {
+                Intent intent = new Intent(ProfileActivity.this,HomeActivity.class);
+                startActivity(intent);
         });
     }
 }
