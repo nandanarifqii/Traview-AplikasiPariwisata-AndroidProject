@@ -1,6 +1,5 @@
 package com.example.finalprojectpapb4;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
 
 public class ReviewAdapter extends FirebaseRecyclerAdapter<ReviewModel, ReviewAdapter.ReviewViewHolder> {
 
     public ReviewAdapter(@NonNull FirebaseRecyclerOptions<ReviewModel> options) {
         super(options);
     }
+
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MMM-yyy");
 
     @NonNull
     @Override
@@ -33,10 +32,11 @@ public class ReviewAdapter extends FirebaseRecyclerAdapter<ReviewModel, ReviewAd
 
     @Override
     protected void onBindViewHolder(@NonNull ReviewViewHolder holder, int position, @NonNull ReviewModel model) {
+        
         // Set data to views
         holder.locationTextView.setText(model.getLocation());
-        holder.dateTextView.setText(model.getDate());
-        holder.nameTextView.setText(model.getName());
+        holder.dateTextView.setText(dateFormatter.format(model.getDate()));
+        holder.nameTextView.setText(model.getUserId());
         holder.reviewTextView.setText(model.getReview());
     }
 

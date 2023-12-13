@@ -38,7 +38,7 @@ public class ReviewAdaptercopy extends RecyclerView.Adapter<ReviewAdaptercopy.Re
         // Set data to views
         holder.locationTextView.setText(reviewModel.getLocation());
         holder.dateTextView.setText(reviewModel.getDate());
-        holder.nameTextView.setText(reviewModel.getName());
+        holder.nameTextView.setText(reviewModel.getUserId());
         holder.reviewTextView.setText(reviewModel.getReview());
     }
 
