@@ -47,11 +47,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Set onClickListener untuk tombol daftar
         Button registerButton = findViewById(R.id.btn_login);
-//        registerButton.setOnClickListener(view -> registerUser());
-        registerButton.setOnClickListener(_view -> {
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(intent);
-        });
+        registerButton.setOnClickListener(view -> registerUser());
+//        registerButton.setOnClickListener(_view -> {
+//            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+//            startActivity(intent);
+//        });
 
         // Set onClickListener untuk tombol Google Sign-In
         Button googleSignInButton = findViewById(R.id.btn_google);
