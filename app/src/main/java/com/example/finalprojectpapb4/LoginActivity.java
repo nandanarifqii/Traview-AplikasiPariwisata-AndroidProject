@@ -44,30 +44,32 @@ public class LoginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        Button loginButton = findViewById(R.id.btn_login);
-//        loginButton.setOnClickListener(view -> loginUser());
-        loginButton.setOnClickListener(_view -> {
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-            startActivity(intent);
-        });
+        // Inisialisasi Google Sign-In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id)) // Ambil dari google-services.json
+                .requestEmail()
+                .build();
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        // Set onClickListener untuk tombol login
+        Button loginButton = findViewById(R.id.btn_login);
+        loginButton.setOnClickListener(view -> loginUser());
+//        loginButton.setOnClickListener(_view -> {
+//            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//            startActivity(intent);
+//        });
+
+        // Set onClickListener untuk tombol Google Sign-In
         Button googleSignInButton = findViewById(R.id.btn_google);
         googleSignInButton.setOnClickListener(view -> signInWithGoogle());
 
-        // Menambahkan referensi TextView ke dalam metode onCreate
+        // Set onClickListener untuk teks "Daftar"
         TextView daftarTextView = findViewById(R.id.subtitle3);
-
-        // Menambahkan onClickListener untuk menangani klik pada teks "Daftar"
-        daftarTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Mengarahkan ke RegisterActivity
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
+        daftarTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
     }
-
 
     private void loginUser() {
         TextInputEditText emailEditText = findViewById(R.id.et_email);
@@ -107,6 +109,12 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
 
+        if (password.length() < 8) {
+            // Handle password tidak valid
+            Toast.makeText(LoginActivity.this, "Password minimum 8 character", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         return true;
     }
 
@@ -115,7 +123,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -123,9 +130,11 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
+                // Google Sign In berhasil, autentikasi ke Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
+                // Google Sign In gagal, tampilkan pesan kesalahan
                 Toast.makeText(this, "Google Sign In failed: " + GoogleSignInStatusCodes.getStatusCodeString(e.getStatusCode()), Toast.LENGTH_SHORT).show();
             }
         }
@@ -138,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
                         Toast.makeText(this, "Authentication successful.", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         // Redirect to your desired activity or do other operations
                     } else {
                         Toast.makeText(this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

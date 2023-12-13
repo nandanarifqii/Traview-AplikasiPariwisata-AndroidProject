@@ -2,4 +2,5 @@
     <string name="app_name">Final Project PAPB 4</string>
     <string name="Keluar"><u> Keluar</u></string>
     <string name="Batal"><u> Batal</u></string>
+    <string name="default_web_client_id" translatable="false">303625936534-covu26nmjc9piaa3r2vnvoa4qo66tqsn.apps.googleusercontent.com</string>
 </resources>
