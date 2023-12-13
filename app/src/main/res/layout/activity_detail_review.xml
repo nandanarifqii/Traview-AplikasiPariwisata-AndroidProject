@@ -9,7 +9,7 @@
 
 
     <ImageButton
-        android:id="@+id/icon_back"
+        android:id="@+id/ib_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/icon_back" />
 
     <TextView
-        android:id="@+id/heading"
+        android:id="@+id/tv_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -27,17 +27,17 @@
         android:text="Ulasan Lokasi"
         android:textColor="@color/bluePrimary"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/icon_back"
-        app:layout_constraintTop_toTopOf="@+id/icon_back" />
+        app:layout_constraintStart_toEndOf="@+id/ib_back"
+        app:layout_constraintTop_toTopOf="@+id/ib_back" />
 
     <ImageView
-        android:id="@+id/review_photo"
+        android:id="@+id/iv_review_photo"
         android:layout_width="0dp"
         android:layout_height="214sp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heading"
+        app:layout_constraintTop_toBottomOf="@+id/tv_heading"
         app:srcCompat="@drawable/img_placeholder" />
 
     <ImageButton
@@ -48,7 +48,7 @@
         android:layout_marginEnd="24dp"
         android:background="@drawable/fab_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/review_photo"
+        app:layout_constraintTop_toTopOf="@+id/iv_review_photo"
         app:srcCompat="@drawable/icon_download" />
 
     <ImageView
@@ -58,7 +58,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/review_photo"
+        app:layout_constraintTop_toBottomOf="@+id/iv_review_photo"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
