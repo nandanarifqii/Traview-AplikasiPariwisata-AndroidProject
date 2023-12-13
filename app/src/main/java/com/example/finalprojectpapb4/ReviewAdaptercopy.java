@@ -4,43 +4,51 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 
 import java.util.List;
 
-public class ReviewAdapter extends FirebaseRecyclerAdapter<ReviewModel, ReviewAdapter.ReviewViewHolder> {
+public class ReviewAdaptercopy extends RecyclerView.Adapter<ReviewAdaptercopy.ReviewViewHolder> {
 
-    public ReviewAdapter(@NonNull FirebaseRecyclerOptions<ReviewModel> options) {
-        super(options);
+
+    private Context context;
+    private List<ReviewModel> reviewList;
+
+    public ReviewAdaptercopy(Context context, List<ReviewModel> reviewList) {
+        this.context = context;
+        this.reviewList = reviewList;
     }
+//
+
 
     @NonNull
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.review_list, parent, false);
         return new ReviewViewHolder(view);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ReviewViewHolder holder, int position, @NonNull ReviewModel model) {
+    public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
+        ReviewModel reviewModel = reviewList.get(position);
+
         // Set data to views
-        holder.locationTextView.setText(model.getLocation());
-        holder.dateTextView.setText(model.getDate());
-        holder.nameTextView.setText(model.getName());
-        holder.reviewTextView.setText(model.getReview());
+        holder.locationTextView.setText(reviewModel.getLocation());
+        holder.dateTextView.setText(reviewModel.getDate());
+        holder.nameTextView.setText(reviewModel.getName());
+        holder.reviewTextView.setText(reviewModel.getReview());
     }
 
-    public static class ReviewViewHolder extends RecyclerView.ViewHolder {
+
+    @Override
+    public int getItemCount() {
+        return reviewList.size();
+    }
+
+    public class ReviewViewHolder extends RecyclerView.ViewHolder {
         TextView locationTextView, dateTextView, nameTextView, reviewTextView;
 
         public ReviewViewHolder(@NonNull View itemView) {

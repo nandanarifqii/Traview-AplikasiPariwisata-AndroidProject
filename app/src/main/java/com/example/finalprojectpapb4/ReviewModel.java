@@ -7,6 +7,7 @@ public class ReviewModel {
     private String name;
     private String review;
 
+    public ReviewModel() {}
     public ReviewModel(String location, String date, String name, String review) {
         this.location = location;
         this.date = date;

@@ -2,15 +2,19 @@ package com.example.finalprojectpapb4;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 public class HomeActivity extends AppCompatActivity {
     FloatingActionButton button;
@@ -56,6 +60,21 @@ public class HomeActivity extends AppCompatActivity {
 
         }
         );
+
+        Query query = FirebaseDatabase.getInstance().getReference().child("Reviews");
+        FirebaseRecyclerOptions<ReviewModel> options =
+                new FirebaseRecyclerOptions.Builder<ReviewModel>()
+                        .setQuery(query, ReviewModel.class)
+                        .build();
+
+        ReviewAdapter adapter = new ReviewAdapter(options);
+
+        RecyclerView recyclerView = findViewById(R.id.RecyclerViewReview);
+        recyclerView.setAdapter(adapter);
+
+        adapter.startListening();
+
+
     }
 
 }
