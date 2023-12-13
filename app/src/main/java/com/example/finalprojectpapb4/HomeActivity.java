@@ -2,13 +2,18 @@ package com.example.finalprojectpapb4;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,6 +25,8 @@ public class HomeActivity extends AppCompatActivity {
     FloatingActionButton button;
     ImageButton searchButton;
     BottomNavigationView navButton;
+    private RecyclerView rv;
+    private FirebaseRecyclerAdapter<ReviewModel, ReviewAdapter.ReviewViewHolder> firebaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,20 +68,47 @@ public class HomeActivity extends AppCompatActivity {
         }
         );
 
-        Query query = FirebaseDatabase.getInstance().getReference().child("Reviews");
+        rv = findViewById(R.id.recyclerViewReview); // Replace with your actual RecyclerView ID
+        rv.setLayoutManager(new LinearLayoutManager(this));
+
+        Query query = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("review")
+                .limitToLast(50);
+
         FirebaseRecyclerOptions<ReviewModel> options =
                 new FirebaseRecyclerOptions.Builder<ReviewModel>()
                         .setQuery(query, ReviewModel.class)
                         .build();
 
-        ReviewAdapter adapter = new ReviewAdapter(options);
+        firebaseAdapter = new FirebaseRecyclerAdapter<ReviewModel, ReviewAdapter.ReviewViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull ReviewAdapter.ReviewViewHolder holder, int position, @NonNull ReviewModel model) {
+                holder.setReview(model);
+            }
 
-        RecyclerView recyclerView = findViewById(R.id.RecyclerViewReview);
-        recyclerView.setAdapter(adapter);
+            @NonNull
+            @Override
+            public ReviewAdapter.ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_list, parent, false);
+                return new ReviewAdapter.ReviewViewHolder(view);
+            }
+        };
 
-        adapter.startListening();
+        rv.setAdapter(firebaseAdapter);
 
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseAdapter.stopListening();
     }
 
 }
