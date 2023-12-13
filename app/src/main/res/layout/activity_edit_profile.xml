@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     tools:context=".EditProfileActivity">
 
     <TextView
@@ -51,11 +53,9 @@
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="387dp"
+        android:layout_width="0dp"
         android:layout_height="54dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
         android:background="@drawable/bg_textfield"
         android:hint="Masukkan Username Baru..."
         android:paddingLeft="30dp"
@@ -67,16 +67,16 @@
 
     <EditText
         android:id="@+id/nama_t"
-        android:layout_width="387dp"
+        android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
         android:background="@drawable/bg_textfield"
         android:hint="Masukkan Nama Baru..."
         android:paddingLeft="30dp"
         android:textColor="@color/off_white"
         android:textColorHint="@color/light_gray"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nama" />
 
     <TextView
