@@ -20,12 +20,12 @@
 
     <TextView
         android:id="@+id/subtitle4"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
         android:layout_marginTop="192dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Silahkan masuk dengan akun yang terdaftar!"
+        android:text="Silahkan registrasi terlebih dahulu!"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="normal"
@@ -67,11 +67,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <LinearLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="196dp"
         android:orientation="vertical"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +95,6 @@
             android:id="@+id/emailTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             app:hintEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -123,7 +123,6 @@
             android:id="@+id/passwordTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -131,101 +130,130 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/bg_input"
-                android:hint="Min 8 Karakter..."
+                android:hint="min 8 karakter"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp"
+                android:textColor="@color/light_gray"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingEnd="20dp"
+            android:text="Konfirmasi Kata Sandi"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password2"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_input"
+                android:hint="Ulangi Kata Sandi..."
                 android:inputType="textPassword"
                 android:paddingLeft="20dp"
                 android:textColor="@color/light_gray"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/blue"
-            android:text="Masuk"
+            android:background="@drawable/bg_button"
+            android:text="Daftar"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/forgot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif"
-        android:gravity="center"
-        android:text="atau"
-        android:textColor="@color/gray"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content"
-        app:layout_constraintVertical_bias="0.0" />
-
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_google"
         android:layout_width="370dp"
         android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="13dp"
-        android:backgroundTint="@color/white"
+        android:background="@drawable/bg_button_google"
         android:drawableLeft="@drawable/g"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
-        android:text="Masuk dengan Google"
+        android:text="Daftar dengan Google"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.609"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgot"
-        app:layout_constraintVertical_bias="0.072"
+        app:layout_constraintVertical_bias="0.071"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/subtitle2"
-        android:layout_width="120dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="44dp"
+        android:id="@+id/forgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Belum Punya Akun?"
-        android:textColor="@color/black"
-        android:textSize="13sp"
-        android:textStyle="normal"
+        android:text="atau"
+        android:textColor="@color/gray"
+        android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.436"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_google"
-        app:layout_constraintVertical_bias="0.478" />
+        app:layout_constraintTop_toBottomOf="@+id/content"
+        app:layout_constraintVertical_bias="0.117" />
 
     <TextView
         android:id="@+id/subtitle3"
         android:layout_width="40dp"
         android:layout_height="24dp"
-        android:layout_marginBottom="44dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Daftar"
+        android:text="Masuk"
         android:textColor="@color/blue"
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.665"
+        app:layout_constraintHorizontal_bias="0.657"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_google"
-        app:layout_constraintVertical_bias="0.478" />
+        app:layout_constraintVertical_bias="0.238" />
+
+    <TextView
+        android:id="@+id/subtitle2"
+        android:layout_width="120dp"
+        android:layout_height="24dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="Sudah punya akun?"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_google"
+        app:layout_constraintVertical_bias="0.238" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

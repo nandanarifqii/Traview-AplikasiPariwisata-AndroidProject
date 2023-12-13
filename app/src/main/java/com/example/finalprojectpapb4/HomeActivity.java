@@ -1,66 +1,31 @@
 package com.example.finalprojectpapb4;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class HomeActivity extends AppCompatActivity {
+    FloatingActionButton button;
+    ImageButton searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        button = findViewById(R.id.button_add);
+        button.setOnClickListener(_view -> {
+            Intent intent = new Intent(HomeActivity.this, AddReviewActivity.class);
+            startActivity(intent);
+        });
 
-        // Dummy data for testing
-        List<ReviewModel> dummyReviewList = getDummyReviewList();
-
-        // Set up RecyclerView and Adapter
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewReview);
-        ReviewAdapter reviewAdapter = new ReviewAdapter(this, dummyReviewList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(reviewAdapter);
-    }
-
-    private List<ReviewModel> getDummyReviewList() {
-        List<ReviewModel> dummyList = new ArrayList<>();
-
-        dummyList.add(new ReviewModel("Bromo, Malang", "22 Nov 2023", "Shani Indira", "Pemandangannya keren, tapi..."));
-        dummyList.add(new ReviewModel("Another Location", "23 Nov 2023", "John Doe", "Lorem ipsum dolor sit amet."));
-        // Add more dummy data as needed
-
-        dummyList.add(new ReviewModel("Bromo, Malang", "22 Nov 2023", "Shani Indira", "Pemandangannya keren, tapi..."));
-        dummyList.add(new ReviewModel("Another Location", "23 Nov 2023", "John Doe", "Lorem ipsum dolor sit amet."));
-        // Add more dummy data as needed
-
-        dummyList.add(new ReviewModel("Bromo, Malang", "22 Nov 2023", "Shani Indira", "Pemandangannya keren, tapi..."));
-        dummyList.add(new ReviewModel("Another Location", "23 Nov 2023", "John Doe", "Lorem ipsum dolor sit amet."));
-        // Add more dummy data as needed
-
-        dummyList.add(new ReviewModel("Bromo, Malang", "22 Nov 2023", "Shani Indira", "Pemandangannya keren, tapi..."));
-        dummyList.add(new ReviewModel("Another Location", "23 Nov 2023", "John Doe", "Lorem ipsum dolor sit amet."));
-        // Add more dummy data as needed
-
-        dummyList.add(new ReviewModel("Bromo, Malang", "22 Nov 2023", "Shani Indira", "Pemandangannya keren, tapi..."));
-        dummyList.add(new ReviewModel("Another Location", "23 Nov 2023", "John Doe", "Lorem ipsum dolor sit amet."));
-        // Add more dummy data as needed
-        dummyList.add(new ReviewModel("Bromo, Malang", "22 Nov 2023", "Shani Indira", "Pemandangannya keren, tapi..."));
-        dummyList.add(new ReviewModel("Another Location", "23 Nov 2023", "John Doe", "Lorem ipsum dolor sit amet."));
-        // Add more dummy data as needed
-
-        dummyList.add(new ReviewModel("Bromo, Malang", "22 Nov 2023", "Shani Indira", "Pemandangannya keren, tapi..."));
-        dummyList.add(new ReviewModel("Another Location", "23 Nov 2023", "John Doe", "Lorem ipsum dolor sit amet."));
-        // Add more dummy data as needed
-
-        dummyList.add(new ReviewModel("Bromo, Malang", "22 Nov 2023", "Shani Indira", "Pemandangannya keren, tapi..."));
-        dummyList.add(new ReviewModel("Another Location", "23 Nov 2023", "John Doe", "Lorem ipsum dolor sit amet."));
-        // Add more dummy data as needed
-
-
-
-        return dummyList;
+        searchButton = findViewById(R.id.search_button);
+        searchButton.setOnClickListener(_view -> {
+            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
     }
 }
