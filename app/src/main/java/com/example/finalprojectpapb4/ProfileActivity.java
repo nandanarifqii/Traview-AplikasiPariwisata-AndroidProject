@@ -26,7 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         btnKeluar = findViewById(R.id.btn_keluar);
-        btnEdit.setOnClickListener(_view -> {
+        btnKeluar.setOnClickListener(_view -> {
                 Intent intent = new Intent(ProfileActivity.this,HomeActivity.class);
                 startActivity(intent);
         });
