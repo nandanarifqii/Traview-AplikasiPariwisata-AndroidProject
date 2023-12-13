@@ -27,12 +27,13 @@ public class EditProfileActivity extends AppCompatActivity {
     ImageView imgProfil;
     Uri imagePath;
     Button btnGanti;
+    Button btnKeluar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        Intent intent = getIntent();
+//        Intent intent = getIntent();
         imgProfil = findViewById(R.id.profil);
         btnGanti = findViewById(R.id.ganti);
         btnGanti.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +41,11 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                uploadImage();
             }
+        });
+        btnKeluar = findViewById(R.id.btn_keluar);
+        btnKeluar.setOnClickListener(_view -> {
+            Intent intent1 = new Intent(EditProfileActivity.this,ProfileActivity.class);
+            startActivity(intent1);
         });
         imgProfil.setOnClickListener(new View.OnClickListener() {
             @Override
