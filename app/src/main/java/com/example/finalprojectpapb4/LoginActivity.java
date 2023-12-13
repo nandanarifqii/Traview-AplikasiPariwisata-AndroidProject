@@ -53,11 +53,11 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set onClickListener untuk tombol login
         Button loginButton = findViewById(R.id.btn_login);
-//        loginButton.setOnClickListener(view -> loginUser());
-        loginButton.setOnClickListener(_view -> {
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-            startActivity(intent);
-        });
+        loginButton.setOnClickListener(view -> loginUser());
+//        loginButton.setOnClickListener(_view -> {
+//            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//            startActivity(intent);
+//        });
 
         // Set onClickListener untuk tombol Google Sign-In
         Button googleSignInButton = findViewById(R.id.btn_google);
