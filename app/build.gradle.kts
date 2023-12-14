@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.example.finalprojectpapb4"
         minSdk = 27
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -44,5 +44,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.google.firebase:firebase-auth:22.3.0")
     implementation ("com.firebaseui:firebase-ui-database:8.0.2")
+    implementation ("androidx.recyclerview:recyclerview")
+    implementation ("com.google.firebase:firebase-database")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 }

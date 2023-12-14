@@ -1,17 +1,23 @@
 package com.example.finalprojectpapb4;
 
+import android.net.Uri;
+
+import java.util.Date;
+
 public class ReviewModel {
 
     private String location;
-    private String date;
-    private String name;
+    private Date date;
+    private String userId;
     private String review;
 
+    private Uri imageUri;
+
     public ReviewModel() {}
-    public ReviewModel(String location, String date, String name, String review) {
+    public ReviewModel(String location, Date date, String userId, String review) {
         this.location = location;
         this.date = date;
-        this.name = name;
+        this.userId = userId;
         this.review = review;
     }
 
@@ -23,20 +29,20 @@ public class ReviewModel {
         this.location = location;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getName() {
-        return name;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getReview() {
@@ -47,5 +53,11 @@ public class ReviewModel {
         this.review = review;
     }
 
+    public Uri getImageUri() {
+        return imageUri;
+    }
 
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
+    }
 }

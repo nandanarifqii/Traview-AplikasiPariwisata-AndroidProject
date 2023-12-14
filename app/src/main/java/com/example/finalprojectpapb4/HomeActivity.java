@@ -2,6 +2,7 @@ package com.example.finalprojectpapb4;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,15 +19,19 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     FloatingActionButton button;
     ImageButton searchButton;
     BottomNavigationView navButton;
     private RecyclerView rv;
-    private FirebaseRecyclerAdapter<ReviewModel, ReviewAdapter.ReviewViewHolder> firebaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,47 +73,42 @@ public class HomeActivity extends AppCompatActivity {
         }
         );
 
-        rv = findViewById(R.id.recyclerViewReview); // Replace with your actual RecyclerView ID
-        rv.setLayoutManager(new LinearLayoutManager(this));
 
-        Query query = FirebaseDatabase.getInstance()
-                .getReference()
-                .child("review")
-                .limitToLast(50);
+        // Get reference to RecyclerView
+//        rv = findViewById(R.id.recyclerViewReview);
+//        rv.setLayoutManager(new LinearLayoutManager(this));
+//        ReviewAdapter adapter = new ReviewAdapter(getOptions());
+//        rv.setAdapter(adapter);
+//        List<ReviewModel> dummyReviewList = getDummyReviewList();
+//
+//        RecyclerView recyclerView = findViewById(R.id.recyclerViewReview);
+//        ReviewAdaptercopy reviewAdapter = new ReviewAdaptercopy(this, dummyReviewList);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(reviewAdapter);
 
-        FirebaseRecyclerOptions<ReviewModel> options =
-                new FirebaseRecyclerOptions.Builder<ReviewModel>()
-                        .setQuery(query, ReviewModel.class)
-                        .build();
-
-        firebaseAdapter = new FirebaseRecyclerAdapter<ReviewModel, ReviewAdapter.ReviewViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull ReviewAdapter.ReviewViewHolder holder, int position, @NonNull ReviewModel model) {
-                holder.setReview(model);
-            }
-
-            @NonNull
-            @Override
-            public ReviewAdapter.ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_list, parent, false);
-                return new ReviewAdapter.ReviewViewHolder(view);
-            }
-        };
-
-        rv.setAdapter(firebaseAdapter);
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        firebaseAdapter.startListening();
+    private List<ReviewModel> getDummyReviewList() {
+        List<ReviewModel> dummyList = new ArrayList<>();
+
+        dummyList.add(new ReviewModel("Bromo, Malang", new Date(),"Shani Indira", "Pemandangannya keren, tapi..."));
+        dummyList.add(new ReviewModel("Another Location", new Date(), "John Doe", "Lorem ipsum dolor sit amet."));
+        // Add more dummy data as needed
+
+        return dummyList;
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        firebaseAdapter.stopListening();
-    }
+
+//    private FirebaseRecyclerOptions<ReviewModel> getOptions() {
+//
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("reviews");
+//
+//        return new FirebaseRecyclerOptions.Builder<ReviewModel>()
+//                .setQuery(ref, ReviewModel.class)
+//                .build();
+//    }
+
+
 
 }
