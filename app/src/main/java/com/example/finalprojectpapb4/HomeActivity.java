@@ -2,36 +2,31 @@ package com.example.finalprojectpapb4;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
     FloatingActionButton button;
     ImageButton searchButton;
     BottomNavigationView navButton;
-    private RecyclerView rv;
+    private DatabaseReference databaseReference;
+    private ReviewAdapter reviewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +69,19 @@ public class HomeActivity extends AppCompatActivity {
         );
 
 
-        // Get reference to RecyclerView
-//        rv = findViewById(R.id.recyclerViewReview);
-//        rv.setLayoutManager(new LinearLayoutManager(this));
-//        ReviewAdapter adapter = new ReviewAdapter(getOptions());
-//        rv.setAdapter(adapter);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewReview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        databaseReference = FirebaseDatabase.getInstance("https://final-project-papb-4-f076f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("reviews");
+
+        FirebaseRecyclerOptions<ReviewModel> options =
+                new FirebaseRecyclerOptions.Builder<ReviewModel>()
+                        .setQuery(databaseReference, ReviewModel.class)
+                        .build();
+
+        reviewAdapter = new ReviewAdapter(options);
+        recyclerView.setAdapter(reviewAdapter);
+
 //        List<ReviewModel> dummyReviewList = getDummyReviewList();
 //
 //        RecyclerView recyclerView = findViewById(R.id.recyclerViewReview);
@@ -86,28 +89,77 @@ public class HomeActivity extends AppCompatActivity {
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        recyclerView.setAdapter(reviewAdapter);
 
+//This is to test the object stored inside reviews
+//        databaseReference.child("reviews").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    // Print the raw data of the "reviews" node
+//                    String rawData = dataSnapshot.getValue(String.class);
+//                    Log.d("HomeActivity", "Raw Data from reviews node: " + rawData);
+//
+//                    // Alternatively, you can iterate through child nodes
+//                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+//                        String childKey = childSnapshot.getKey();
+//                        String childValue = childSnapshot.getValue(String.class);
+//                        Log.d("HomeActivity", "Child Key: " + childKey + ", Child Value: " + childValue);
+//                    }
+//                } else {
+//                    // The "reviews" node is empty
+//                    Log.d("HomeActivity", "No reviews found in the database");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // Handle errors
+//                Log.e("HomeActivity", "Error checking for reviews: " + databaseError.getMessage());
+//            }
+//        });
+
+
+
 
     }
 
-    private List<ReviewModel> getDummyReviewList() {
-        List<ReviewModel> dummyList = new ArrayList<>();
-
-        dummyList.add(new ReviewModel("Bromo, Malang", new Date(),"Shani Indira", "Pemandangannya keren, tapi..."));
-        dummyList.add(new ReviewModel("Another Location", new Date(), "John Doe", "Lorem ipsum dolor sit amet."));
-        // Add more dummy data as needed
-
-        return dummyList;
-    }
-
-
-//    private FirebaseRecyclerOptions<ReviewModel> getOptions() {
+//    private List<ReviewModel> getDummyReviewList() {
+//        List<ReviewModel> dummyList = new ArrayList<>();
 //
-//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("reviews");
+//        dummyList.add(new ReviewModel("Bromo, Malang", new Date(),"Shani Indira", "Pemandangannya keren, tapi..."));
+//        dummyList.add(new ReviewModel("Another Location", new Date(), "John Doe", "Lorem ipsum dolor sit amet."));
+//        dummyList.add(new ReviewModel("Bromo, Malang", new Date(),"Shani Indira", "Pemandangannya keren, tapi..."));
+//        dummyList.add(new ReviewModel("Another Location", new Date(), "John Doe", "Lorem ipsum dolor sit amet."));
+//        dummyList.add(new ReviewModel("Bromo, Malang", new Date(),"Shani Indira", "Pemandangannya keren, tapi..."));
+//        dummyList.add(new ReviewModel("Another Location", new Date(), "John Doe", "Lorem ipsum dolor sit amet."));
+//        dummyList.add(new ReviewModel("Bromo, Malang", new Date(),"Shani Indira", "Pemandangannya keren, tapi..."));
+//        dummyList.add(new ReviewModel("Another Location", new Date(), "John Doe", "Lorem ipsum dolor sit amet."));
+//        dummyList.add(new ReviewModel("Bromo, Malang", new Date(),"Shani Indira", "Pemandangannya keren, tapi..."));
+//        dummyList.add(new ReviewModel("Another Location", new Date(), "John Doe", "Lorem ipsum dolor sit amet."));
+//        dummyList.add(new ReviewModel("Bromo, Malang", new Date(),"Shani Indira", "Pemandangannya keren, tapi..."));
+//        dummyList.add(new ReviewModel("Another Location", new Date(), "John Doe", "Lorem ipsum dolor sit amet."));
+//        dummyList.add(new ReviewModel("Bromo, Malang", new Date(),"Shani Indira", "Pemandangannya keren, tapi..."));
+//        dummyList.add(new ReviewModel("Another Location", new Date(), "John Doe", "Lorem ipsum dolor sit amet."));    dummyList.add(new ReviewModel("Bromo, Malang", new Date(),"Shani Indira", "Pemandangannya keren, tapi..."));
+//        dummyList.add(new ReviewModel("Another Location", new Date(), "John Doe", "Lorem ipsum dolor sit amet."));
 //
-//        return new FirebaseRecyclerOptions.Builder<ReviewModel>()
-//                .setQuery(ref, ReviewModel.class)
-//                .build();
+//
+//        // Add more dummy data as needed
+//
+//        return dummyList;
 //    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        reviewAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        reviewAdapter.stopListening();
+    }
+
 
 
 
