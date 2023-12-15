@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+
 public class HomeActivity extends AppCompatActivity {
     FloatingActionButton button;
     ImageButton searchButton;
@@ -73,6 +75,10 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         databaseReference = FirebaseDatabase.getInstance("https://final-project-papb-4-f076f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("reviews");
+
+        databaseReference.child("dummy123").setValue(new ReviewModel("Bandung", new Date(), "namakusiapa", "Review dummy ea"));
+        databaseReference.child("dummy124").setValue(new ReviewModel("Malang", new Date(), "namamusiapa", "Review dummy ea"));
+
 
         FirebaseRecyclerOptions<ReviewModel> options =
                 new FirebaseRecyclerOptions.Builder<ReviewModel>()
