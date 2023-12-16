@@ -24,6 +24,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -77,6 +79,8 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+                        createUsernameAndName();
+
                         // Registrasi berhasil, alihkan ke MainActivity
                         startActivity(
                                 new Intent(getApplicationContext(), HomeActivity.class));
@@ -161,6 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Autentikasi berhasil, alihkan atau lakukan operasi lainnya
                         FirebaseUser user = mAuth.getCurrentUser();
+                        createUsernameAndName();
                         Toast.makeText(getApplicationContext(),
                                 "Authentication successful.",
                                 Toast.LENGTH_SHORT
@@ -174,5 +179,22 @@ public class RegisterActivity extends AppCompatActivity {
                         ).show();
                     }
                 });
+    }
+
+    private void createUsernameAndName() {
+        DatabaseReference userReference = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("user_profiles");
+
+        String defaultValue = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        defaultValue = defaultValue.substring(0, defaultValue.indexOf("@"));
+
+        userReference
+                .child(FirebaseAuth
+                        .getInstance()
+                        .getCurrentUser()
+                        .getUid()
+                ).setValue(new UserModel(defaultValue, defaultValue));
     }
 }
