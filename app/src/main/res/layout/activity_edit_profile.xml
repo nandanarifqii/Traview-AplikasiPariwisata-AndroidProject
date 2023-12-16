@@ -21,19 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/profil"
-        style="@style/circle"
-        android:layout_width="102dp"
-        android:layout_height="111dp"
-        android:layout_marginTop="88dp"
-        android:src="@drawable/ic_person"
-        android:background="@color/light_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/circle" />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ganti"
@@ -149,6 +137,18 @@
         android:text=".jpg .png max 5mb"
         app:layout_constraintStart_toEndOf="@+id/profil"
         app:layout_constraintTop_toBottomOf="@+id/ganti" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profil"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="84dp"
+        android:src="@drawable/ic_person"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Circular" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
