@@ -70,14 +70,13 @@ public class DetailReviewActivity extends AppCompatActivity {
         Log.d("DetailReviewActivity", "Image URL: " + imageUri);
 
         if (imageUri != null) {
-            // Your existing code for setting up views and other functionality
             Glide.with(this).load(imageUri).into(ivReviewImage);
             ibDownloadImage.setOnClickListener(view -> {
                 downloadImage();
             });
         } else {
             Toast.makeText(this, "Image URL is null", Toast.LENGTH_SHORT).show();
-            // Handle the case when imageUri is null
+
         }
 
 
