@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_edit"
+        android:id="@+id/btn_save"
         android:layout_width="278dp"
         android:layout_height="65dp"
         android:layout_marginBottom="8dp"
@@ -66,13 +66,13 @@
         android:textColor="#ffffffff"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_sign_out"
+        app:layout_constraintBottom_toTopOf="@+id/btn_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_sign_out"
+        android:id="@+id/btn_cancel"
         android:layout_width="278dp"
         android:layout_height="65dp"
         android:layout_marginBottom="104dp"

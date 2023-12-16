@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/ganti"
+        android:id="@+id/btn_upload_profile_image"
         android:layout_width="127dp"
         android:layout_height="53dp"
         android:layout_marginStart="16dp"
@@ -52,35 +52,35 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/tv_username"
+        android:id="@+id/et_edit_username"
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/bg_textfield"
         android:hint="Masukkan Username Baru..."
         android:paddingLeft="30dp"
-        android:textColor="@color/off_white"
+        android:textColor="@color/light_gray"
         android:textColorHint="@color/light_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uname" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_username" />
 
     <EditText
-        android:id="@+id/nama_t"
+        android:id="@+id/et_edit_name"
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/bg_textfield"
         android:hint="Masukkan Nama Baru..."
         android:paddingLeft="30dp"
-        android:textColor="@color/off_white"
+        android:textColor="@color/light_gray"
         android:textColorHint="@color/light_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nama" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_name" />
 
     <TextView
-        android:id="@+id/uname"
+        android:id="@+id/tv_label_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -89,12 +89,12 @@
         android:text="Username"
         android:textSize="14dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tv_username"
+        app:layout_constraintBottom_toTopOf="@+id/et_edit_username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_image_profile" />
 
     <TextView
-        android:id="@+id/nama"
+        android:id="@+id/tv_label_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -103,11 +103,11 @@
         android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_username" />
+        app:layout_constraintTop_toBottomOf="@+id/et_edit_username" />
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_edit"
+        android:id="@+id/btn_save"
         android:layout_width="163dp"
         android:layout_height="48dp"
         android:layout_marginEnd="24dp"
@@ -122,7 +122,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_sign_out"
+        android:id="@+id/btn_cancel"
         android:layout_width="163dp"
         android:layout_height="48dp"
         android:layout_marginStart="24dp"
@@ -137,14 +137,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_extension_file_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:text=".jpg .png max 5mb"
         app:layout_constraintStart_toEndOf="@+id/iv_image_profile"
-        app:layout_constraintTop_toBottomOf="@+id/ganti" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_upload_profile_image" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

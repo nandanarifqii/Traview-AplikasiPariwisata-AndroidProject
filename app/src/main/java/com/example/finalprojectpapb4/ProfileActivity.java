@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,6 +31,8 @@ public class ProfileActivity extends AppCompatActivity {
     Button btnSignOut;
     BottomNavigationView menuNav;
 
+    UserModel currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +41,9 @@ public class ProfileActivity extends AppCompatActivity {
         ivProfileImage = findViewById(R.id.iv_image_profile);
         tvName = findViewById(R.id.tv_name);
         tvUsername = findViewById(R.id.tv_profil_username);
-        btnEdit = findViewById(R.id.btn_edit);
+        btnEdit = findViewById(R.id.btn_save);
         menuNav = findViewById(R.id.menu_nav);
-        btnSignOut = findViewById(R.id.btn_sign_out);
+        btnSignOut = findViewById(R.id.btn_cancel);
 
         DatabaseReference userReference = FirebaseDatabase
                 .getInstance()
@@ -54,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserModel currentUser = snapshot.getValue(UserModel.class);
+                currentUser = snapshot.getValue(UserModel.class);
                 tvName.setText(currentUser.getName());
                 tvUsername.setText(currentUser.getUsername());
                 if (currentUser.getImageProfileUri() != null) {
@@ -66,21 +69,28 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Error occurred: " + error.getMessage(),
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         });
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                intent.putExtra("name", currentUser.getName());
+                intent.putExtra("username", currentUser.getUsername());
+                intent.putExtra("imageUri", currentUser.getImageProfileUri() == null ?
+                        "" :
+                        currentUser.getImageProfileUri());
                 startActivity(intent);
             }
         });
 
-        btnSignOut.setOnClickListener(_view ->
-
-        {
+        btnSignOut.setOnClickListener(_view -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
             startActivity(intent);
@@ -98,8 +108,5 @@ public class ProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
-
 }
