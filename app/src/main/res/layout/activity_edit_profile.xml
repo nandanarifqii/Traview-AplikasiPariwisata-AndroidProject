@@ -21,12 +21,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profil"
         android:layout_width="102dp"
         android:layout_height="111dp"
         android:layout_marginTop="88dp"
         android:background="@drawable/bg_circle"
+        app:shapeAppearanceOverlay="@style/circle"
         android:src="@drawable/ic_person"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.161"
