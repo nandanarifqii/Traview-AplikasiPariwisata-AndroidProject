@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements IOnItemClickListener {
     FloatingActionButton button;
     ImageButton searchButton;
     BottomNavigationView navButton;
@@ -76,8 +76,8 @@ public class HomeActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance("https://final-project-papb-4-f076f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("reviews");
 
-        databaseReference.child("dummy123").setValue(new ReviewModel("Bandung", new Date(), "namakusiapa", "Review dummy ea"));
-        databaseReference.child("dummy124").setValue(new ReviewModel("Malang", new Date(), "namamusiapa", "Review dummy ea"));
+        databaseReference.child("dummy125").setValue(new ReviewModel("Jakarta", new Date(), "Bambang", "Review dummy ea"));
+        databaseReference.child("dummy126").setValue(new ReviewModel("Surabaya", new Date(), "Jaya Wijaya", "Review dummy ea"));
 
 
         FirebaseRecyclerOptions<ReviewModel> options =
@@ -167,6 +167,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-
-
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(HomeActivity.this, DetailReviewActivity.class);
+        startActivity(intent);
+    }
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,13 +21,15 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import java.text.SimpleDateFormat;
 
 public class ReviewAdapter extends FirebaseRecyclerAdapter<ReviewModel, ReviewAdapter.ReviewViewHolder> {
-
+    private IOnItemClickListener iOnItemClickListener;
     public ReviewAdapter(@NonNull FirebaseRecyclerOptions<ReviewModel> options) {
         super(options);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull ReviewViewHolder holder, int position, @NonNull ReviewModel model) {
+
+
         // Bind data to views
         Log.d("ReviewAdapter", "Binding data for position: " + position);
         holder.locationTextView.setText(model.getLocation());
@@ -65,7 +68,20 @@ public class ReviewAdapter extends FirebaseRecyclerAdapter<ReviewModel, ReviewAd
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.review_list, parent, false);
-        return new ReviewViewHolder(view);
+// OnClickListener added
+        final ReviewViewHolder viewHolder = new ReviewViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = viewHolder.getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && iOnItemClickListener != null) {
+                    iOnItemClickListener.onItemClick(position);
+                }
+            }
+        });
+//
+//        return new ReviewViewHolder(view);
+    return viewHolder;
     }
 
     static class ReviewViewHolder extends RecyclerView.ViewHolder {
@@ -84,4 +100,9 @@ public class ReviewAdapter extends FirebaseRecyclerAdapter<ReviewModel, ReviewAd
             imageView = itemView.findViewById(R.id.iv_image);
         }
     }
+
+    public void setiOnItemClickListener(IOnItemClickListener listener) {
+        this.iOnItemClickListener=listener;
+    }
+
 }
