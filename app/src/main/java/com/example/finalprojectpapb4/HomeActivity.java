@@ -14,14 +14,19 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity implements IOnItemClickListener {
     FloatingActionButton btnAddReview;
     ImageButton btnSearch;
     BottomNavigationView menuNav;
     private DatabaseReference databaseReference;
+    private DatabaseReference userReference;
     private ReviewAdapter reviewAdapter;
 
     @Override
@@ -61,6 +66,7 @@ public class HomeActivity extends AppCompatActivity implements IOnItemClickListe
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+//        Review item
         databaseReference = FirebaseDatabase.getInstance().getReference().child("reviews");
 
         FirebaseRecyclerOptions<ReviewModel> options =
@@ -68,9 +74,46 @@ public class HomeActivity extends AppCompatActivity implements IOnItemClickListe
                         .setQuery(databaseReference, ReviewModel.class)
                         .build();
 
-        reviewAdapter = new ReviewAdapter(options);
-        recyclerView.setAdapter(reviewAdapter);
-        reviewAdapter.setOnItemClickListener(this);
+//        User Data
+        userReference = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("user_profiles")
+                .child(FirebaseAuth
+                        .getInstance()
+                        .getCurrentUser()
+                        .getUid());
+
+//          Old
+//        reviewAdapter = new ReviewAdapter(options);
+//        recyclerView.setAdapter(reviewAdapter);
+//        reviewAdapter.setOnItemClickListener(this);
+
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String userName = snapshot.child("displayName").getValue(String.class);
+
+                    // Set the user's name in the adapter
+                    reviewAdapter = new ReviewAdapter(options, userName);
+                    recyclerView.setAdapter(reviewAdapter);
+                    reviewAdapter.setOnItemClickListener(HomeActivity.this);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+            }
+        });
+
+//        FirebaseRecyclerOptions<ReviewModel> options =
+//                new FirebaseRecyclerOptions.Builder<ReviewModel>()
+//                        .setQuery(databaseReference, ReviewModel.class)
+//                        .build();
+
+
     }
 
     @Override

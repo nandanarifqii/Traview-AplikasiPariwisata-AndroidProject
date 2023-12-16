@@ -14,23 +14,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ReviewAdapter extends FirebaseRecyclerAdapter<ReviewModel, ReviewAdapter.ReviewViewHolder> {
     private IOnItemClickListener iOnItemClickListener;
-
-    public ReviewAdapter(@NonNull FirebaseRecyclerOptions<ReviewModel> options) {
+    private String userName;
+    public ReviewAdapter(@NonNull FirebaseRecyclerOptions<ReviewModel> options, String userName) {
         super(options);
+        this.userName = userName;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull ReviewViewHolder holder, int position, @NonNull ReviewModel model) {
 
         holder.locationTextView.setText(model.getLocation());
-
-        holder.namaTextView.setText(model.getUserId());
-
-        holder.reviewTextView.setText(model.getReview());
-
+        holder.namaTextView.setText(userName);
         Glide.with(holder.itemView.getContext())
                 .load(model.getImageUri())
                 .into(holder.imageView);
