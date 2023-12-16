@@ -87,6 +87,7 @@ public class HomeActivity extends AppCompatActivity implements IOnItemClickListe
 
         reviewAdapter = new ReviewAdapter(options);
         recyclerView.setAdapter(reviewAdapter);
+        reviewAdapter.setiOnItemClickListener(this);
 
 //        List<ReviewModel> dummyReviewList = getDummyReviewList();
 //
@@ -169,7 +170,12 @@ public class HomeActivity extends AppCompatActivity implements IOnItemClickListe
 
     @Override
     public void onItemClick(int position) {
+        ReviewModel clickedItem = reviewAdapter.getItem(position);
         Intent intent = new Intent(HomeActivity.this, DetailReviewActivity.class);
+        intent.putExtra("location", clickedItem.getLocation());
+        intent.putExtra("date", clickedItem.getDate());
+        intent.putExtra("userId", clickedItem.getUserId());
+        intent.putExtra("review", clickedItem.getReview());
         startActivity(intent);
     }
 }
