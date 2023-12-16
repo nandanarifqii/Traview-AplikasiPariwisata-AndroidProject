@@ -2,13 +2,21 @@ package com.example.finalprojectpapb4;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 
 public class DetailReviewActivity extends AppCompatActivity {
     private ImageButton btnBack;
@@ -19,19 +27,30 @@ public class DetailReviewActivity extends AppCompatActivity {
     private TextView tvLocation;
     private TextView tvDate;
     private TextView tvReviewContent;
+    private StorageReference imageRef;
+
+    private Intent homeIntent;
+    private String location;
+    private String date;
+    private String userName;
+    private String review;
+    private String imageUri;
+    private String userId;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_review);
     
-        Intent homeIntent = getIntent();
-        String location = homeIntent.getStringExtra("location");
-        String date = homeIntent.getStringExtra("date");
-        String userId = homeIntent.getStringExtra("userId");
-        String userName = homeIntent.getStringExtra("userName");
-        String review = homeIntent.getStringExtra("review");
-        String imageUri = homeIntent.getStringExtra("imageUri");
+        homeIntent = getIntent();
+        location = homeIntent.getStringExtra("location");
+        date = homeIntent.getStringExtra("date");
+        userId = homeIntent.getStringExtra("userId");
+        userName = homeIntent.getStringExtra("userName");
+        review = homeIntent.getStringExtra("review");
+        imageUri = homeIntent.getStringExtra("imageUri");
 
         btnBack = findViewById(R.id.ib_back);
         ivReviewImage = findViewById(R.id.iv_review_photo);
