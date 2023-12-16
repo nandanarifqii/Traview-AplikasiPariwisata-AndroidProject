@@ -14,25 +14,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReviewAdapter extends FirebaseRecyclerAdapter<ReviewModel, ReviewAdapter.ReviewViewHolder> {
     private IOnItemClickListener iOnItemClickListener;
-    private String userName;
-    public ReviewAdapter(@NonNull FirebaseRecyclerOptions<ReviewModel> options, String userName) {
+    private Map<String, String> userIdToNameMap; // Map to store user names
+
+    public ReviewAdapter(@NonNull FirebaseRecyclerOptions<ReviewModel> options) {
         super(options);
-        this.userName = userName;
+        userIdToNameMap = new HashMap<>();
     }
 
     @Override
     protected void onBindViewHolder(@NonNull ReviewViewHolder holder, int position, @NonNull ReviewModel model) {
 
         holder.locationTextView.setText(model.getLocation());
-        holder.namaTextView.setText(userName);
+        holder.reviewTextView.setText(model.getReview());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        holder.dateTextView.setText(dateFormat.format(model.getDate()));
+        holder.namaTextView.setText(userIdToNameMap.get(model.getUserId()));
         Glide.with(holder.itemView.getContext())
                 .load(model.getImageUri())
                 .into(holder.imageView);
@@ -77,6 +80,9 @@ public class ReviewAdapter extends FirebaseRecyclerAdapter<ReviewModel, ReviewAd
 
     public void setOnItemClickListener(IOnItemClickListener listener) {
         this.iOnItemClickListener = listener;
+    }
+    public void setUserIdToNameMap(Map<String, String> userIdToNameMap) {
+        this.userIdToNameMap = userIdToNameMap;
     }
 
 }
