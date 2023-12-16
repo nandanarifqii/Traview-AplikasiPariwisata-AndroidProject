@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+
 public class DetailReviewActivity extends AppCompatActivity {
     private ImageButton btnBack;
     private ImageView ivReviewImage;
@@ -22,6 +24,14 @@ public class DetailReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_review);
+    
+        Intent homeIntent = getIntent();
+        String location = homeIntent.getStringExtra("location");
+        String date = homeIntent.getStringExtra("date");
+        String userId = homeIntent.getStringExtra("userId");
+        String userName = homeIntent.getStringExtra("userName");
+        String review = homeIntent.getStringExtra("review");
+        String imageUri = homeIntent.getStringExtra("imageUri");
 
         btnBack = findViewById(R.id.ib_back);
         ivReviewImage = findViewById(R.id.iv_review_photo);
@@ -31,6 +41,12 @@ public class DetailReviewActivity extends AppCompatActivity {
         tvLocation = findViewById(R.id.tv_location);
         tvDate = findViewById(R.id.tv_detail_review_date);
         tvReviewContent = findViewById(R.id.tv_review_content);
+
+        tvUsername.setText(userName);
+        tvLocation.setText(location);
+        tvDate.setText(date);
+        tvReviewContent.setText(review);
+        Glide.with(this).load(imageUri).into(ivReviewImage);
 
         btnBack.setOnClickListener(_view -> {
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
