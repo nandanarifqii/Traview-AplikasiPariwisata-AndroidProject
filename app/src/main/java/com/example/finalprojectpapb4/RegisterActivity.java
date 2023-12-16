@@ -47,16 +47,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Set onClickListener untuk tombol daftar
         Button registerButton = findViewById(R.id.btn_login);
-        registerButton.setOnClickListener(view -> registerUser());
+        registerButton.setOnClickListener(_view -> registerUser());
 
         // Set onClickListener untuk tombol Google Sign-In
         Button googleSignInButton = findViewById(R.id.btn_google);
-        googleSignInButton.setOnClickListener(view -> signInWithGoogle());
+        googleSignInButton.setOnClickListener(_view -> signInWithGoogle());
 
         // Set onClickListener untuk teks "Masuk"
         TextView masukTextView = findViewById(R.id.subtitle3);
         masukTextView.setOnClickListener(view -> {
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
         });
     }
@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Registrasi berhasil, alihkan ke MainActivity
                         startActivity(
-                                new Intent(RegisterActivity.this, HomeActivity.class));
+                                new Intent(getApplicationContext(), HomeActivity.class));
                         finish();
                     } else {
                         // Registrasi gagal, tampilkan pesan kesalahan
