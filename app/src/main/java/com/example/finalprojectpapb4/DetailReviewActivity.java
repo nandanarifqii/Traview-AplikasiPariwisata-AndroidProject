@@ -27,7 +27,7 @@ public class DetailReviewActivity extends AppCompatActivity {
         ivReviewImage = findViewById(R.id.iv_review_photo);
         ibDownloadImage = findViewById(R.id.ib_download_image);
         ivUserProfile = findViewById(R.id.iv_user_profile_pic);
-        tvUsername = findViewById(R.id.tv_username);
+        tvUsername = findViewById(R.id.et_edit_username);
         tvLocation = findViewById(R.id.tv_location);
         tvDate = findViewById(R.id.tv_detail_review_date);
         tvReviewContent = findViewById(R.id.tv_review_content);
