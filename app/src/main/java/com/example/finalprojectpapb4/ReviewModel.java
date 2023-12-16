@@ -1,7 +1,5 @@
 package com.example.finalprojectpapb4;
 
-import android.net.Uri;
-
 import java.util.Date;
 
 public class ReviewModel {

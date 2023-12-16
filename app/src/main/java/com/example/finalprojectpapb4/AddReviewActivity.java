@@ -1,11 +1,9 @@
 package com.example.finalprojectpapb4;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -134,7 +132,6 @@ public class AddReviewActivity extends AppCompatActivity {
                 backToHome();
             }
         });
-
     }
 
     public boolean validateReview(String location, String review) {
