@@ -1,31 +1,40 @@
 package com.example.finalprojectpapb4;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.Date;
+
 public class AddReviewActivity extends AppCompatActivity {
     private ImageButton btnBack;
     private ImageView ivReviewImage;
-    private Button btnUploadImage;
+    private Button btnPickImage;
     private EditText etLocation;
-    private EditText etReview;
+    private EditText etReviewContent;
     private Button btnSubmit;
 
     private Uri imageUri;
 
+    private ActivityResultLauncher<Intent> reviewImageSetter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,68 +43,133 @@ public class AddReviewActivity extends AppCompatActivity {
 
         btnBack = findViewById(R.id.ib_back);
         ivReviewImage = findViewById(R.id.iv_review_photo);
-        btnUploadImage = findViewById(R.id.bt_upload_img);
+        btnPickImage = findViewById(R.id.bt_upload_img);
         etLocation = findViewById(R.id.et_location);
-        etReview = findViewById(R.id.et_review);
+        etReviewContent = findViewById(R.id.et_review);
         btnSubmit = findViewById(R.id.btn_submit);
 
-        btnBack.setOnClickListener(_view -> backToHome());
-        btnUploadImage.setOnClickListener(_view -> uploadImage());
-        btnSubmit.setOnClickListener(_view -> uploadReview(
-                this.etLocation.getText().toString(),
-                this.etReview.getText().toString()
-        ));
-    }
-
-    private void uploadImage() {
-        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+        reviewImageSetter = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent data = result.getData();
-                            imageUri = data.getData();
-                            ivReviewImage.setImageURI(imageUri);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "No Image Selected", Toast.LENGTH_SHORT).show();
-                        }
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        imageUri = data.getData();
+                        ivReviewImage.setImageURI(imageUri);
+                    } else {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "No Image Selected",
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 }
         );
 
+        btnBack.setOnClickListener(_view -> backToHome());
+        btnPickImage.setOnClickListener(_view -> pickImage());
+        btnSubmit.setOnClickListener(_view -> uploadReview(
+                this.etLocation.getText().toString(),
+                this.etReviewContent.getText().toString()
+        ));
+    }
 
+    private void pickImage() {
         Intent photoPicker = new Intent();
         photoPicker.setAction(Intent.ACTION_GET_CONTENT);
         photoPicker.setType("image/*");
-        activityResultLauncher.launch(photoPicker);
+        this.reviewImageSetter.launch(photoPicker);
     }
 
-    public void uploadReview(String location, String review) {
-        if (!validateReview(location, review)) {
+    public void uploadReview(String location, String reviewContent) {
+        if (!validateReview(location, reviewContent)) {
             return;
         }
 
-        // TODO: finish upload logic
-        // NOTE: need model
+        DatabaseReference reviewReference = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("reviews");
 
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intent);
+        String key = reviewReference.push().getKey();
+
+        final StorageReference imageReference = FirebaseStorage
+                .getInstance()
+                .getReference()
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(key);
+
+        imageReference
+                .putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    imageUri = taskSnapshot.getUploadSessionUri();
+                })
+                .addOnFailureListener(_exception -> {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Failed upon uploading image",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                });
+
+        ReviewModel review = new ReviewModel(
+                location,
+                new Date(),
+                FirebaseAuth.getInstance().getCurrentUser().getUid().toString(),
+                reviewContent,
+                imageUri.toString()
+        );
+
+//        Log.d("review data", review.toString());
+
+        reviewReference.child(key).setValue(review, (error, ref) -> {
+            if (error != null) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Failed to upload review because " + error.getMessage(),
+                        Toast.LENGTH_SHORT
+                ).show();
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "Successfully upload review",
+                        Toast.LENGTH_SHORT
+                ).show();
+                backToHome();
+            }
+        });
+
+    }
+
+    private String getFileExtension(Uri fileUri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(contentResolver.getType(fileUri));
     }
 
     public boolean validateReview(String location, String review) {
         if (location.equals("")) {
-            Toast.makeText(getApplicationContext(), "Location can not be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Location can not be empty",
+                    Toast.LENGTH_SHORT
+            ).show();
             return false;
         }
 
         if (review.equals("")) {
-            Toast.makeText(getApplicationContext(), "Review can not be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Review can not be empty",
+                    Toast.LENGTH_SHORT
+            ).show();
             return false;
         }
 
         if (imageUri == null) {
-            Toast.makeText(getApplicationContext(), "Image can not be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Image can not be empty",
+                    Toast.LENGTH_SHORT
+            ).show();
             return false;
         }
 
