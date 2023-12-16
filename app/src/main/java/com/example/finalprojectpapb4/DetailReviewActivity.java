@@ -21,10 +21,10 @@ public class DetailReviewActivity extends AppCompatActivity {
     private TextView tvReviewContent;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_review);
-    
+
         Intent homeIntent = getIntent();
         String location = homeIntent.getStringExtra("location");
         String date = homeIntent.getStringExtra("date");
@@ -49,8 +49,9 @@ public class DetailReviewActivity extends AppCompatActivity {
         Glide.with(this).load(imageUri).into(ivReviewImage);
 
         btnBack.setOnClickListener(_view -> {
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(intent);
+//            Intent profileIntent = new Intent(DetailReviewActivity.this, HomeActivity.class);
+//            startActivity(profileIntent);
+            finish();
         });
     }
 }

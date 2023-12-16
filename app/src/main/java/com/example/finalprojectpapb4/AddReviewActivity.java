@@ -63,7 +63,7 @@ public class AddReviewActivity extends AppCompatActivity {
                 }
         );
 
-        btnBack.setOnClickListener(_view -> backToHome());
+        btnBack.setOnClickListener(_view -> finish());
         btnPickImage.setOnClickListener(_view -> pickImage());
         btnSubmit.setOnClickListener(_view -> uploadReview(
                 this.etLocation.getText().toString(),
@@ -126,7 +126,7 @@ public class AddReviewActivity extends AppCompatActivity {
                                                 "Successfully upload review",
                                                 Toast.LENGTH_SHORT
                                         ).show();
-                                        backToHome();
+                                        finish();
                                     }
                                 });
                             });
@@ -169,10 +169,5 @@ public class AddReviewActivity extends AppCompatActivity {
         }
 
         return true;
-    }
-
-    private void backToHome() {
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intent);
     }
 }

@@ -14,6 +14,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,13 +44,13 @@ public class HomeActivity extends AppCompatActivity implements IOnItemClickListe
         RecyclerView recyclerView = findViewById(R.id.recyclerViewReview);
 
         btnAddReview.setOnClickListener(_view -> {
-            Intent intent = new Intent(getApplicationContext(), AddReviewActivity.class);
-            startActivity(intent);
-        });
-
-        btnSearch.setOnClickListener(_view -> {
-            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-            startActivity(intent);
+            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(HomeActivity.this, AddReviewActivity.class);
+                startActivity(intent);
+            }
         });
 
         menuNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -58,9 +59,15 @@ public class HomeActivity extends AppCompatActivity implements IOnItemClickListe
                 if (item.getItemId() == R.id.beranda) {
                     return true;
                 } else if (item.getItemId() == R.id.menu_profile) {
-                    Intent profileIntent = new Intent(getApplicationContext(), ProfileActivity.class);
-                    startActivity(profileIntent);
-                    return true;
+                    if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        return true;
+                    } else {
+                        Intent profileIntent = new Intent(HomeActivity.this, ProfileActivity.class);
+                        startActivity(profileIntent);
+                        return true;
+                    }
                 }
 
                 return false;
@@ -100,8 +107,6 @@ public class HomeActivity extends AppCompatActivity implements IOnItemClickListe
         reviewAdapter = new ReviewAdapter(options);
         recyclerView.setAdapter(reviewAdapter);
         reviewAdapter.setOnItemClickListener(this);
-
-
     }
 
     @Override
@@ -129,5 +134,10 @@ public class HomeActivity extends AppCompatActivity implements IOnItemClickListe
         intent.putExtra("review", clickedItem.getReview());
         intent.putExtra("imageUri", clickedItem.getImageUri());
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

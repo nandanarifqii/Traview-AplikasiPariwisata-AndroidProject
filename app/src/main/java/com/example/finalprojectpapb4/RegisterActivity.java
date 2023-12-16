@@ -76,10 +76,6 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         createUsernameAndName();
-
-                        // Registrasi berhasil, alihkan ke MainActivity
-                        startActivity(
-                                new Intent(getApplicationContext(), HomeActivity.class));
                         finish();
                     } else {
                         // Registrasi gagal, tampilkan pesan kesalahan
@@ -166,7 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 "Authentication successful.",
                                 Toast.LENGTH_SHORT
                         ).show();
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        finish();
                     } else {
                         // Autentikasi gagal, tampilkan pesan kesalahan
                         Toast.makeText(getApplicationContext(),
