@@ -91,7 +91,8 @@ public class DetailReviewActivity extends AppCompatActivity {
     private void downloadImage() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             if (isValidFirebaseStorageUri(imageUri)) {
-                File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File directory = Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
                 // Generate a unique filename based on timestamp
                 String timestamp = String.valueOf(System.currentTimeMillis());
                 File localFile = new File(directory, "downloaded_image_" + timestamp + ".jpg");
@@ -99,16 +100,28 @@ public class DetailReviewActivity extends AppCompatActivity {
                 Log.d("DownloadImage", "Local file path: " + localFile.getAbsolutePath());
 
                 storageRef.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
-                    Toast.makeText(DetailReviewActivity.this, "Image Downloaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            "Image Downloaded",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }).addOnFailureListener(exception -> {
-                    Toast.makeText(DetailReviewActivity.this, "Failed to download image: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            "Failed to download image: " + exception.getMessage(),
+                            Toast.LENGTH_SHORT
+                    ).show();
                     exception.printStackTrace(); // Log the exception details
                 });
             } else {
-                Toast.makeText(this, "Invalid Firebase Storage URL", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        "Invalid Firebase Storage URL",
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         } else {
-            Toast.makeText(this, "External storage not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),
+                    "External storage not available",
+                    Toast.LENGTH_SHORT
+            ).show();
         }
     }
 
