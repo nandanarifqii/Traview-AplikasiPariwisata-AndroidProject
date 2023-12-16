@@ -34,10 +34,6 @@ public class LoginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-        }
-
         // Inisialisasi Google Sign-In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id)) // Ambil dari google-services.json
@@ -58,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         daftarTextView.setOnClickListener(_view -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 
@@ -80,7 +77,8 @@ public class LoginActivity extends AppCompatActivity {
                                 "Login Successful",
                                 Toast.LENGTH_SHORT
                         ).show();
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
                         finish();
                     } else {
                         Toast.makeText(getApplicationContext(),
@@ -162,8 +160,9 @@ public class LoginActivity extends AppCompatActivity {
                                 "Authentication successful.",
                                 Toast.LENGTH_SHORT
                         ).show();
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                        // Redirect to your desired activity or do other operations
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(getApplicationContext(),
                                 "Authentication failed: " + task.getException().getMessage(),

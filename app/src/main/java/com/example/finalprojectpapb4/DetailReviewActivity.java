@@ -40,17 +40,17 @@ public class DetailReviewActivity extends AppCompatActivity {
     private StorageReference storageRef;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_review);
-    
-        homeIntent = getIntent();
-        location = homeIntent.getStringExtra("location");
-        date = homeIntent.getStringExtra("date");
-        userId = homeIntent.getStringExtra("userId");
-        userName = homeIntent.getStringExtra("userName");
-        review = homeIntent.getStringExtra("review");
-        imageUri = homeIntent.getStringExtra("imageUri");
+
+        Intent homeIntent = getIntent();
+        String location = homeIntent.getStringExtra("location");
+        String date = homeIntent.getStringExtra("date");
+        String userId = homeIntent.getStringExtra("userId");
+        String userName = homeIntent.getStringExtra("userName");
+        String review = homeIntent.getStringExtra("review");
+        String imageUri = homeIntent.getStringExtra("imageUri");
 
         btnBack = findViewById(R.id.ib_back);
         ivReviewImage = findViewById(R.id.iv_review_photo);
@@ -82,9 +82,9 @@ public class DetailReviewActivity extends AppCompatActivity {
 
 
         btnBack.setOnClickListener(_view -> {
-//            finish();
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(intent);
+//            Intent profileIntent = new Intent(DetailReviewActivity.this, HomeActivity.class);
+//            startActivity(profileIntent);
+            finish();
         });
     }
 

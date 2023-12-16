@@ -80,15 +80,16 @@ public class ProfileActivity extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
                 startActivity(intent);
             }
         });
 
         btnSignOut.setOnClickListener(_view -> {
             FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+            Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
             startActivity(intent);
+            finish();
         });
 
         menuNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -96,8 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 if (item.getItemId() == R.id.beranda) {
-                    Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(homeIntent);
+                    finish();
                     return true;
                 }
                 return false;
