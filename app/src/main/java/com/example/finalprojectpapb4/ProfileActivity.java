@@ -11,10 +11,11 @@ import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileActivity extends AppCompatActivity {
     Button btnEdit;
-    Button btnBack;
+    Button btnSignOut;
 
     BottomNavigationView menuNav;
 
@@ -33,8 +34,9 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        btnBack = findViewById(R.id.btn_keluar);
-        btnBack.setOnClickListener(_view -> {
+        btnSignOut = findViewById(R.id.btn_keluar);
+        btnSignOut.setOnClickListener(_view -> {
+            FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
             startActivity(intent);
         });
