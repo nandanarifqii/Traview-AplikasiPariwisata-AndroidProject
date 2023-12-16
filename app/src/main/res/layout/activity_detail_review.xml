@@ -41,7 +41,7 @@
         app:srcCompat="@drawable/img_placeholder" />
 
     <ImageButton
-        android:id="@+id/download_fab"
+        android:id="@+id/ib_download_image"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="158dp"
@@ -52,7 +52,7 @@
         app:srcCompat="@drawable/icon_download" />
 
     <ImageView
-        android:id="@+id/user_profile_pic"
+        android:id="@+id/iv_user_profile_pic"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
@@ -62,7 +62,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/tv_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -70,11 +70,11 @@
         android:text="username"
         android:textSize="18sp"
         android:textColor="@color/black"
-        app:layout_constraintStart_toEndOf="@+id/user_profile_pic"
-        app:layout_constraintTop_toTopOf="@+id/user_profile_pic" />
+        app:layout_constraintStart_toEndOf="@+id/iv_user_profile_pic"
+        app:layout_constraintTop_toTopOf="@+id/iv_user_profile_pic" />
 
     <TextView
-        android:id="@+id/location"
+        android:id="@+id/tv_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -83,10 +83,10 @@
         android:textSize="14sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_profile_pic" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_user_profile_pic" />
 
     <TextView
-        android:id="@+id/date"
+        android:id="@+id/tv_detail_review_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -95,10 +95,10 @@
         android:textSize="14sp"
         android:textColor="@color/blackSecondary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_location" />
 
     <TextView
-        android:id="@+id/user_review"
+        android:id="@+id/tv_review_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -109,6 +109,6 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_review_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

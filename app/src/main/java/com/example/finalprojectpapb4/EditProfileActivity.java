@@ -1,5 +1,4 @@
 package com.example.finalprojectpapb4;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -8,9 +7,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,33 +18,32 @@ import androidx.appcompat.app.AppCompatActivity;
 //import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.util.UUID;
 
 public class EditProfileActivity extends AppCompatActivity {
-    ImageView imgProfil;
-    Uri imagePath;
-    Button btnGanti;
-    Button btnKeluar;
+    ImageView ivImageProfile;
+    Uri imageUri;
+    Button btnChangeProfile;
+    Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 //        Intent intent = getIntent();
-        imgProfil = findViewById(R.id.profil);
-        btnGanti = findViewById(R.id.ganti);
-        btnGanti.setOnClickListener(new View.OnClickListener() {
+        ivImageProfile = findViewById(R.id.profil);
+        btnChangeProfile = findViewById(R.id.ganti);
+        btnChangeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                uploadImage();
             }
         });
-        btnKeluar = findViewById(R.id.btn_keluar);
-        btnKeluar.setOnClickListener(_view -> {
+        btnBack = findViewById(R.id.btn_keluar);
+        btnBack.setOnClickListener(_view -> {
             Intent intent1 = new Intent(EditProfileActivity.this,ProfileActivity.class);
             startActivity(intent1);
         });
-        imgProfil.setOnClickListener(new View.OnClickListener() {
+        ivImageProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent photoIntent = new Intent(Intent.ACTION_PICK);
@@ -63,17 +59,17 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            imagePath = data.getData(); // Inisialisasi imagePath dengan alamat gambar yang dipilih
+            imageUri = data.getData(); // Inisialisasi imagePath dengan alamat gambar yang dipilih
             getImageInImageView();
         }
     }
 
     private void getImageInImageView() {
-        if (imagePath != null) {
+        if (imageUri != null) {
             Bitmap bitmap = null;
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imagePath);
-                imgProfil.setImageBitmap(bitmap);
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                ivImageProfile.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }

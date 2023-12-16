@@ -9,31 +9,31 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class DetailReviewActivity extends AppCompatActivity {
-    private ImageButton backButton;
-    private ImageView reviewImageView;
-    private ImageButton downloadImageButton;
-    private ImageView userProfileImageView;
-    private TextView usernameTextView;
-    private TextView locationTextView;
-    private TextView dateTextView;
-    private TextView userReviewTextView;
+    private ImageButton btnBack;
+    private ImageView ivReviewImage;
+    private ImageButton ibDownloadImage;
+    private ImageView ivUserProfile;
+    private TextView tvUsername;
+    private TextView tvLocation;
+    private TextView tvDate;
+    private TextView tvReviewContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_review);
 
-        backButton = findViewById(R.id.ib_back);
-        reviewImageView = findViewById(R.id.iv_review_photo);
-        downloadImageButton = findViewById(R.id.download_fab);
-        userProfileImageView = findViewById(R.id.user_profile_pic);
-        usernameTextView = findViewById(R.id.username);
-        locationTextView = findViewById(R.id.location);
-        dateTextView = findViewById(R.id.date);
-        userReviewTextView = findViewById(R.id.user_review);
+        btnBack = findViewById(R.id.ib_back);
+        ivReviewImage = findViewById(R.id.iv_review_photo);
+        ibDownloadImage = findViewById(R.id.ib_download_image);
+        ivUserProfile = findViewById(R.id.iv_user_profile_pic);
+        tvUsername = findViewById(R.id.tv_username);
+        tvLocation = findViewById(R.id.tv_location);
+        tvDate = findViewById(R.id.tv_detail_review_date);
+        tvReviewContent = findViewById(R.id.tv_review_content);
 
-        backButton.setOnClickListener(_view -> {
-            Intent intent = new Intent(DetailReviewActivity.this, HomeActivity.class);
+        btnBack.setOnClickListener(_view -> {
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
         });
     }

@@ -14,9 +14,9 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class ProfileActivity extends AppCompatActivity {
     Button btnEdit;
-    Button btnKeluar;
+    Button btnBack;
 
-    BottomNavigationView navButton;
+    BottomNavigationView menuNav;
 
 
     @Override
@@ -27,27 +27,27 @@ public class ProfileActivity extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProfileActivity.this,EditProfileActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
                 startActivity(intent);
 
             }
         });
 
-        btnKeluar = findViewById(R.id.btn_keluar);
-        btnKeluar.setOnClickListener(_view -> {
-                Intent intent = new Intent(ProfileActivity.this,RegisterActivity.class);
-                startActivity(intent);
+        btnBack = findViewById(R.id.btn_keluar);
+        btnBack.setOnClickListener(_view -> {
+            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+            startActivity(intent);
         });
 
 
-        navButton = findViewById(R.id.bottom_navigation);
+        menuNav = findViewById(R.id.bottom_navigation);
 
-        navButton.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        menuNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 if (item.getItemId() == R.id.beranda) {
-                    Intent homeIntent = new Intent(ProfileActivity.this, HomeActivity.class);
+                    Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(homeIntent);
                     return true;
                 } else if (item.getItemId() == R.id.menu_profile) {

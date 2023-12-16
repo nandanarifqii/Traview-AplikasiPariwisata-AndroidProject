@@ -11,14 +11,15 @@ public class ReviewModel {
     private String userId;
     private String review;
 
-    private Uri imageUri;
+    private String imageUri;
 
     public ReviewModel() {}
-    public ReviewModel(String location, Date date, String userId, String review) {
+    public ReviewModel(String location, Date date, String userId, String review, String imageUri) {
         this.location = location;
         this.date = date;
         this.userId = userId;
         this.review = review;
+        this.imageUri = imageUri;
     }
 
     public String getLocation() {
@@ -53,11 +54,11 @@ public class ReviewModel {
         this.review = review;
     }
 
-    public Uri getImageUri() {
+    public String getImageUri() {
         return imageUri;
     }
 
-    public void setImageUri(Uri imageUri) {
+    public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
     }
 }

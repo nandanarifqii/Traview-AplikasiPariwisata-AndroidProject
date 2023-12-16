@@ -48,10 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
         // Set onClickListener untuk tombol daftar
         Button registerButton = findViewById(R.id.btn_login);
         registerButton.setOnClickListener(view -> registerUser());
-//        registerButton.setOnClickListener(_view -> {
-//            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-//            startActivity(intent);
-//        });
 
         // Set onClickListener untuk tombol Google Sign-In
         Button googleSignInButton = findViewById(R.id.btn_google);
@@ -82,12 +78,15 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         // Registrasi berhasil, alihkan ke MainActivity
-                        startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                        startActivity(
+                                new Intent(RegisterActivity.this, HomeActivity.class));
                         finish();
                     } else {
                         // Registrasi gagal, tampilkan pesan kesalahan
-                        Toast.makeText(RegisterActivity.this, "Registrasi gagal: " + task.getException().getMessage(),
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),
+                                "Registrasi gagal: " + task.getException().getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 });
     }
@@ -97,19 +96,29 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (password.isEmpty()) {
             // Handle empty password
-            Toast.makeText(RegisterActivity.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Password cannot be empty",
+                    Toast.LENGTH_SHORT
+            ).show();
             return false;
         }
 
         if (password.length() < 8) {
             // Handle password tidak valid
-            Toast.makeText(RegisterActivity.this, "Password minimum 8 character", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),
+                    "Password minimum 8 character",
+                    Toast.LENGTH_SHORT
+            ).show();
             return false;
         }
 
         if (!password.equals(confirmPassword)) {
             // Handle konfirmasi password tidak sesuai
-            Toast.makeText(RegisterActivity.this, "Password confirmation does not match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),
+                    "Password confirmation does not match",
+                    Toast.LENGTH_SHORT
+            ).show();
             return false;
         }
 
@@ -130,11 +139,17 @@ public class RegisterActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In berhasil, autentikasi ke Firebase
-                GoogleSignInAccount account = (GoogleSignInAccount) ((Task<?>) task).getResult(ApiException.class);
+                GoogleSignInAccount account = (GoogleSignInAccount) ((Task<?>) task)
+                        .getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In gagal, tampilkan pesan kesalahan
-                Toast.makeText(this, "Google Sign In failed: " + GoogleSignInStatusCodes.getStatusCodeString(e.getStatusCode()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        String.format(
+                                "Google Sign In failed: %s",
+                                GoogleSignInStatusCodes.getStatusCodeString(e.getStatusCode())),
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         }
     }
@@ -146,11 +161,17 @@ public class RegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Autentikasi berhasil, alihkan atau lakukan operasi lainnya
                         FirebaseUser user = mAuth.getCurrentUser();
-                        Toast.makeText(this, "Authentication successful.", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                        Toast.makeText(getApplicationContext(),
+                                "Authentication successful.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     } else {
                         // Autentikasi gagal, tampilkan pesan kesalahan
-                        Toast.makeText(this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),
+                                "Authentication failed: " + task.getException().getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 });
     }

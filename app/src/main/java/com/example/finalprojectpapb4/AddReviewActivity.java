@@ -119,8 +119,6 @@ public class AddReviewActivity extends AppCompatActivity {
                 imageUri.toString()
         );
 
-//        Log.d("review data", review.toString());
-
         reviewReference.child(key).setValue(review, (error, ref) -> {
             if (error != null) {
                 Toast.makeText(
@@ -137,12 +135,6 @@ public class AddReviewActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private String getFileExtension(Uri fileUri) {
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(contentResolver.getType(fileUri));
     }
 
     public boolean validateReview(String location, String review) {
