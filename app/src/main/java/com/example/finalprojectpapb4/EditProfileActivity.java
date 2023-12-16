@@ -14,6 +14,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -87,8 +88,31 @@ public class EditProfileActivity extends AppCompatActivity {
 
         imageReference
                 .putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> {
-                    imageUri = taskSnapshot.getUploadSessionUri();
+                .addOnSuccessListener(_taskSnapshot -> {
+                    imageReference
+                            .getDownloadUrl()
+                            .addOnSuccessListener(uri -> {
+                                UserModel updatedProfile = new UserModel(
+                                        etEditUsername.getText().toString(),
+                                        etEditName.getText().toString());
+                                updatedProfile.setImageProfileUri(uri.toString());
+
+                                reviewReference.setValue(updatedProfile, (error, ref) -> {
+                                    if (error != null) {
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                "Failed to update profile because " + error.getMessage(),
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Successfully update profile",
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                        backToProfile();
+                                    }
+                                });
+                            });
                 })
                 .addOnFailureListener(_exception -> {
                     Toast.makeText(
@@ -97,27 +121,6 @@ public class EditProfileActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT
                     ).show();
                 });
-
-        UserModel updatedProfile = new UserModel(
-                etEditUsername.getText().toString(),
-                etEditName.getText().toString());
-        updatedProfile.setImageProfileUri(imageUri.toString());
-
-        reviewReference.setValue(updatedProfile, (error, ref) -> {
-            if (error != null) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Failed to update profile because " + error.getMessage(),
-                        Toast.LENGTH_SHORT
-                ).show();
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        "Successfully update profile",
-                        Toast.LENGTH_SHORT
-                ).show();
-                backToProfile();
-            }
-        });
     }
 
     public boolean validateForm(String username, String name) {

@@ -98,8 +98,38 @@ public class AddReviewActivity extends AppCompatActivity {
 
         imageReference
                 .putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> {
-                    imageUri = taskSnapshot.getUploadSessionUri();
+                .addOnSuccessListener(_taskSnapshot -> {
+                    imageReference
+                            .getDownloadUrl()
+                            .addOnSuccessListener(uri -> {
+                                ReviewModel review = new ReviewModel(
+                                        location,
+                                        new Date(),
+                                        FirebaseAuth
+                                                .getInstance()
+                                                .getCurrentUser()
+                                                .getUid()
+                                                .toString(),
+                                        reviewContent,
+                                        uri.toString()
+                                );
+
+                                reviewReference.child(key).setValue(review, (error, ref) -> {
+                                    if (error != null) {
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                "Failed to upload review because " + error.getMessage(),
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Successfully upload review",
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                        backToHome();
+                                    }
+                                });
+                            });
                 })
                 .addOnFailureListener(_exception -> {
                     Toast.makeText(
@@ -108,30 +138,6 @@ public class AddReviewActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT
                     ).show();
                 });
-
-        ReviewModel review = new ReviewModel(
-                location,
-                new Date(),
-                FirebaseAuth.getInstance().getCurrentUser().getUid().toString(),
-                reviewContent,
-                imageUri.toString()
-        );
-
-        reviewReference.child(key).setValue(review, (error, ref) -> {
-            if (error != null) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Failed to upload review because " + error.getMessage(),
-                        Toast.LENGTH_SHORT
-                ).show();
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        "Successfully upload review",
-                        Toast.LENGTH_SHORT
-                ).show();
-                backToHome();
-            }
-        });
     }
 
     public boolean validateReview(String location, String review) {

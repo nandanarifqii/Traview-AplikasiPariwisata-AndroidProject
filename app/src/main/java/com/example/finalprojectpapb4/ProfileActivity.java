@@ -80,12 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                intent.putExtra("name", currentUser.getName());
-                intent.putExtra("username", currentUser.getUsername());
-                intent.putExtra("imageUri", currentUser.getImageProfileUri() == null ?
-                        "" :
-                        currentUser.getImageProfileUri());
+                Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
                 startActivity(intent);
             }
         });
