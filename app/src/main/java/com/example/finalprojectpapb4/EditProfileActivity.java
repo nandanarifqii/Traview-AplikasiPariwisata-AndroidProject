@@ -30,7 +30,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 //        Intent intent = getIntent();
-        ivImageProfile = findViewById(R.id.profil);
+        ivImageProfile = findViewById(R.id.iv_image_profile);
         btnChangeProfile = findViewById(R.id.ganti);
         btnChangeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +38,7 @@ public class EditProfileActivity extends AppCompatActivity {
 //                uploadImage();
             }
         });
-        btnBack = findViewById(R.id.btn_keluar);
+        btnBack = findViewById(R.id.btn_sign_out);
         btnBack.setOnClickListener(_view -> {
             Intent intent1 = new Intent(EditProfileActivity.this,ProfileActivity.class);
             startActivity(intent1);

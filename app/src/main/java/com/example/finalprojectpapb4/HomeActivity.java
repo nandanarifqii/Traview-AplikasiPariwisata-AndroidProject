@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity implements IOnItemClickListe
 
         btnAddReview = findViewById(R.id.button_add);
         btnSearch = findViewById(R.id.search_button);
-        menuNav = findViewById(R.id.bottom_navigation);
+        menuNav = findViewById(R.id.menu_nav);
         RecyclerView recyclerView = findViewById(R.id.recyclerViewReview);
 
         btnAddReview.setOnClickListener(_view -> {
