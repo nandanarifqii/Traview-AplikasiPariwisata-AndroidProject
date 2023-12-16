@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity implements IOnItemClickListe
             }
         });
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManagerWrapper(this));
 
 //        Review item
         databaseReference = FirebaseDatabase.getInstance().getReference().child("reviews");
