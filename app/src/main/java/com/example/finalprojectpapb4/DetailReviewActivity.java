@@ -61,15 +61,67 @@ public class DetailReviewActivity extends AppCompatActivity {
         tvDate = findViewById(R.id.tv_detail_review_date);
         tvReviewContent = findViewById(R.id.tv_review_content);
 
+        storageRef = storage.getReferenceFromUrl(imageUri);
+
         tvUsername.setText(userName);
         tvLocation.setText(location);
         tvDate.setText(date);
         tvReviewContent.setText(review);
-        Glide.with(this).load(imageUri).into(ivReviewImage);
+        Log.d("DetailReviewActivity", "Image URL: " + imageUri);
+
+        if (imageUri != null) {
+            // Your existing code for setting up views and other functionality
+            Glide.with(this).load(imageUri).into(ivReviewImage);
+            ibDownloadImage.setOnClickListener(view -> {
+                downloadImage();
+            });
+        } else {
+            Toast.makeText(this, "Image URL is null", Toast.LENGTH_SHORT).show();
+            // Handle the case when imageUri is null
+        }
+
+
 
         btnBack.setOnClickListener(_view -> {
+//            finish();
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
         });
     }
+
+    private void downloadImage() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            if (isValidFirebaseStorageUri(imageUri)) {
+                File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                // Generate a unique filename based on timestamp
+                String timestamp = String.valueOf(System.currentTimeMillis());
+                File localFile = new File(directory, "downloaded_image_" + timestamp + ".jpg");
+
+                Log.d("DownloadImage", "Local file path: " + localFile.getAbsolutePath());
+
+                storageRef.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                    Toast.makeText(DetailReviewActivity.this, "Image Downloaded", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(exception -> {
+                    Toast.makeText(DetailReviewActivity.this, "Failed to download image: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    exception.printStackTrace(); // Log the exception details
+                });
+            } else {
+                Toast.makeText(this, "Invalid Firebase Storage URL", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "External storage not available", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean isValidFirebaseStorageUri(String uri) {
+        try {
+            // Attempt to create a StorageReference, if successful, consider it a valid Firebase Storage URL
+            FirebaseStorage.getInstance().getReferenceFromUrl(uri);
+            return true;
+        } catch (IllegalArgumentException e) {
+            // If an exception is caught, it is not a valid Firebase Storage URL
+            return false;
+        }
+    }
+
 }
