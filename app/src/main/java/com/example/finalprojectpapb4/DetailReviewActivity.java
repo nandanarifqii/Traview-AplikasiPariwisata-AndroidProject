@@ -28,13 +28,6 @@ public class DetailReviewActivity extends AppCompatActivity {
     private TextView tvDate;
     private TextView tvReviewContent;
     private StorageReference imageRef;
-
-    private Intent homeIntent;
-    private String location;
-    private String date;
-    private String userName;
-    private String review;
-    private String imageUri;
     private String userId;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef;
@@ -72,23 +65,17 @@ public class DetailReviewActivity extends AppCompatActivity {
         if (imageUri != null) {
             Glide.with(this).load(imageUri).into(ivReviewImage);
             ibDownloadImage.setOnClickListener(view -> {
-                downloadImage();
+                downloadImage(imageUri);
             });
         } else {
             Toast.makeText(this, "Image URL is null", Toast.LENGTH_SHORT).show();
 
         }
 
-
-
-        btnBack.setOnClickListener(_view -> {
-//            Intent profileIntent = new Intent(DetailReviewActivity.this, HomeActivity.class);
-//            startActivity(profileIntent);
-            finish();
-        });
+        btnBack.setOnClickListener(_view -> finish());
     }
 
-    private void downloadImage() {
+    private void downloadImage(String imageUri) {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             if (isValidFirebaseStorageUri(imageUri)) {
                 File directory = Environment
