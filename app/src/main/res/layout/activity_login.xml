@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".LoginActivity">
 
 
     <ImageView
@@ -22,7 +22,7 @@
         android:id="@+id/subtitle4"
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:layout_marginTop="192dp"
+        android:layout_marginTop="164dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="Silahkan masuk dengan akun yang terdaftar!"
@@ -30,7 +30,7 @@
         android:textSize="16sp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +38,7 @@
         android:id="@+id/subtitle5"
         android:layout_width="180dp"
         android:layout_height="30dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="136dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="Selamat Datang di"
@@ -55,7 +55,7 @@
         android:id="@+id/subtitle"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="136dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="TRAVIEW"
@@ -63,7 +63,7 @@
         android:textSize="20sp"
         android:textStyle="bold|normal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.781"
+        app:layout_constraintHorizontal_bias="0.794"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,7 +71,7 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="212dp"
         android:orientation="vertical"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
                 android:hint="Masukkan Email..."
                 android:inputType="textEmailAddress"
                 android:paddingLeft="20dp"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -134,7 +134,7 @@
                 android:hint="Min 8 Karakter..."
                 android:inputType="textPassword"
                 android:paddingLeft="20dp"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,7 +188,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgot"
-        app:layout_constraintVertical_bias="0.072"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -207,7 +207,7 @@
         app:layout_constraintHorizontal_bias="0.436"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_google"
-        app:layout_constraintVertical_bias="0.478" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/subtitle3"
@@ -222,10 +222,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.665"
+        app:layout_constraintHorizontal_bias="0.673"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_google"
-        app:layout_constraintVertical_bias="0.478" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

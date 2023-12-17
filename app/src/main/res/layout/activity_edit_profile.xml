@@ -21,10 +21,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039" />
 
-
+    <ImageView
+        android:id="@+id/iv_image_profile"
+        android:layout_width="102dp"
+        android:layout_height="111dp"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/bg_circle"
+        android:src="@drawable/ic_person"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.161"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/ganti"
+        android:id="@+id/btn_upload_profile_image"
         android:layout_width="127dp"
         android:layout_height="53dp"
         android:layout_marginStart="16dp"
@@ -38,39 +48,39 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.22"
-        app:layout_constraintStart_toEndOf="@+id/profil"
+        app:layout_constraintStart_toEndOf="@+id/iv_image_profile"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/et_edit_username"
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/bg_textfield"
         android:hint="Masukkan Username Baru..."
         android:paddingLeft="30dp"
-        android:textColor="@color/off_white"
+        android:textColor="@color/light_gray"
         android:textColorHint="@color/light_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uname" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_username" />
 
     <EditText
-        android:id="@+id/nama_t"
+        android:id="@+id/et_edit_name"
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/bg_textfield"
         android:hint="Masukkan Nama Baru..."
         android:paddingLeft="30dp"
-        android:textColor="@color/off_white"
+        android:textColor="@color/light_gray"
         android:textColorHint="@color/light_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nama" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_name" />
 
     <TextView
-        android:id="@+id/uname"
+        android:id="@+id/tv_label_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -79,12 +89,12 @@
         android:text="Username"
         android:textSize="14dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintBottom_toTopOf="@+id/et_edit_username"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profil" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_image_profile" />
 
     <TextView
-        android:id="@+id/nama"
+        android:id="@+id/tv_label_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -93,11 +103,11 @@
         android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/et_edit_username" />
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_edit"
+        android:id="@+id/btn_save"
         android:layout_width="163dp"
         android:layout_height="48dp"
         android:layout_marginEnd="24dp"
@@ -112,11 +122,10 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_keluar"
+        android:id="@+id/btn_cancel"
         android:layout_width="163dp"
         android:layout_height="48dp"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="5dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/keluar"
         android:text="@string/Batal"
@@ -125,30 +134,17 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_edit"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_extension_file_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:text=".jpg .png max 5mb"
-        app:layout_constraintStart_toEndOf="@+id/profil"
-        app:layout_constraintTop_toBottomOf="@+id/ganti" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profil"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="84dp"
-        android:src="@drawable/ic_person"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/Circular" />
+        app:layout_constraintStart_toEndOf="@+id/iv_image_profile"
+        app:layout_constraintTop_toBottomOf="@+id/btn_upload_profile_image" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

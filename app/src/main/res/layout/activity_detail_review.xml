@@ -9,7 +9,7 @@
 
 
     <ImageButton
-        android:id="@+id/icon_back"
+        android:id="@+id/ib_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/icon_back" />
 
     <TextView
-        android:id="@+id/heading"
+        android:id="@+id/tv_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -27,42 +27,42 @@
         android:text="Ulasan Lokasi"
         android:textColor="@color/bluePrimary"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/icon_back"
-        app:layout_constraintTop_toTopOf="@+id/icon_back" />
+        app:layout_constraintStart_toEndOf="@+id/ib_back"
+        app:layout_constraintTop_toTopOf="@+id/ib_back" />
 
     <ImageView
-        android:id="@+id/review_photo"
+        android:id="@+id/iv_review_photo"
         android:layout_width="0dp"
         android:layout_height="214sp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heading"
+        app:layout_constraintTop_toBottomOf="@+id/tv_heading"
         app:srcCompat="@drawable/img_placeholder" />
 
     <ImageButton
-        android:id="@+id/download_fab"
+        android:id="@+id/ib_download_image"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="158dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/fab_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/review_photo"
+        app:layout_constraintTop_toTopOf="@+id/iv_review_photo"
         app:srcCompat="@drawable/icon_download" />
 
     <ImageView
-        android:id="@+id/user_profile_pic"
+        android:id="@+id/iv_user_profile_pic"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/review_photo"
+        app:layout_constraintTop_toBottomOf="@+id/iv_review_photo"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/et_edit_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -70,11 +70,11 @@
         android:text="username"
         android:textSize="18sp"
         android:textColor="@color/black"
-        app:layout_constraintStart_toEndOf="@+id/user_profile_pic"
-        app:layout_constraintTop_toTopOf="@+id/user_profile_pic" />
+        app:layout_constraintStart_toEndOf="@+id/iv_user_profile_pic"
+        app:layout_constraintTop_toTopOf="@+id/iv_user_profile_pic" />
 
     <TextView
-        android:id="@+id/location"
+        android:id="@+id/tv_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -83,10 +83,10 @@
         android:textSize="14sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_profile_pic" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_user_profile_pic" />
 
     <TextView
-        android:id="@+id/date"
+        android:id="@+id/tv_detail_review_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -95,10 +95,10 @@
         android:textSize="14sp"
         android:textColor="@color/blackSecondary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_location" />
 
     <TextView
-        android:id="@+id/user_review"
+        android:id="@+id/tv_review_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -109,6 +109,6 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_review_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

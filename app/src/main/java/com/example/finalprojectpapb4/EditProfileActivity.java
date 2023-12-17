@@ -1,114 +1,168 @@
 package com.example.finalprojectpapb4;
-import android.app.ProgressDialog;
+
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-//import com.google.android.gms.tasks.OnCompleteListener;
-//import com.google.android.gms.tasks.Task;
-//import com.google.firebase.storage.FirebaseStorage;
-//import com.google.firebase.storage.StorageReference;
-//import com.google.firebase.storage.UploadTask;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.io.IOException;
-import java.util.UUID;
+import java.util.Date;
 
 public class EditProfileActivity extends AppCompatActivity {
-    ImageView imgProfil;
-    Uri imagePath;
-    Button btnGanti;
-    Button btnKeluar;
+    private ImageView ivImageProfile;
+    private Button btnUploadProfile;
+    private EditText etEditUsername;
+    private EditText etEditName;
+    private Button btnSave;
+    private Button btnCancel;
+    private Uri imageUri;
+    private ActivityResultLauncher<Intent> reviewImageSetter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-//        Intent intent = getIntent();
-        imgProfil = findViewById(R.id.profil);
-        btnGanti = findViewById(R.id.ganti);
-        btnGanti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                uploadImage();
-            }
-        });
-        btnKeluar = findViewById(R.id.btn_keluar);
-        btnKeluar.setOnClickListener(_view -> {
-            Intent intent1 = new Intent(EditProfileActivity.this,ProfileActivity.class);
-            startActivity(intent1);
-        });
-        imgProfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent photoIntent = new Intent(Intent.ACTION_PICK);
-                photoIntent.setType("image/*");
-                startActivityForResult(photoIntent,1 );
 
+        ivImageProfile = findViewById(R.id.iv_image_profile);
+        btnUploadProfile = findViewById(R.id.btn_upload_profile_image);
+        etEditUsername = findViewById(R.id.et_edit_username);
+        etEditName = findViewById(R.id.et_edit_name);
+        btnSave = findViewById(R.id.btn_save);
+        btnCancel = findViewById(R.id.btn_cancel);
 
-            }
-        });
+        Log.d("username", getIntent().getStringExtra("imageUri"));
+
+        etEditUsername.setText(getIntent().getStringExtra("username"));
+        etEditName.setText(getIntent().getStringExtra("name"));
+//        ivImageProfile.setImageURI(Uri.parse(getIntent().getStringExtra("imageUri")));
+
+        reviewImageSetter = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        imageUri = data.getData();
+                        ivImageProfile.setImageURI(imageUri);
+                    } else {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "No Image Selected",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                }
+        );
+
+        btnUploadProfile.setOnClickListener(_view -> pickImage());
+        btnSave.setOnClickListener(_view -> updateProfile());
+        btnCancel.setOnClickListener(_view -> backToProfile());
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            imagePath = data.getData(); // Inisialisasi imagePath dengan alamat gambar yang dipilih
-            getImageInImageView();
+    private void updateProfile() {
+        DatabaseReference reviewReference = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("user_profiles")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        final StorageReference imageReference = FirebaseStorage
+                .getInstance()
+                .getReference()
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("profile_image");
+
+        imageReference
+                .putFile(imageUri)
+                .addOnSuccessListener(_taskSnapshot -> {
+                    imageReference
+                            .getDownloadUrl()
+                            .addOnSuccessListener(uri -> {
+                                UserModel updatedProfile = new UserModel(
+                                        etEditUsername.getText().toString(),
+                                        etEditName.getText().toString());
+                                updatedProfile.setImageProfileUri(uri.toString());
+
+                                reviewReference.setValue(updatedProfile, (error, ref) -> {
+                                    if (error != null) {
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                "Failed to update profile because " + error.getMessage(),
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Successfully update profile",
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                        backToProfile();
+                                    }
+                                });
+                            });
+                })
+                .addOnFailureListener(_exception -> {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Failed upon uploading image",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                });
+    }
+
+    public boolean validateForm(String username, String name) {
+        if (username.equals("")) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Username can not be empty",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return false;
         }
+
+        if (name.equals("")) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Name can not be empty",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return false;
+        }
+
+        if (imageUri == null) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Image can not be empty",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return false;
+        }
+
+        return true;
     }
 
-    private void getImageInImageView() {
-        if (imagePath != null) {
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imagePath);
-                imgProfil.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    private void pickImage() {
+        Intent photoPicker = new Intent();
+        photoPicker.setAction(Intent.ACTION_GET_CONTENT);
+        photoPicker.setType("image/*");
+        this.reviewImageSetter.launch(photoPicker);
     }
-//    private void uploadImage() {
-//        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
-//        builder.setTitle("Uploading...");
-//        builder.setCancelable(false);
-//
-//        final androidx.appcompat.app.AlertDialog progressDialog = builder.create();
-//        progressDialog.show();
-//
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference("image/" + UUID.randomUUID().toString());
-//
-//        storageReference.putFile(imagePath)
-//                .addOnProgressListener(taskSnapshot -> {
-//                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-//                    progressDialog.setMessage("Uploaded " + ((int) progress) + "%");
-//                })
-//                .addOnCompleteListener(task -> {
-//                    progressDialog.dismiss();
-//                    Toast.makeText(EditActivity.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
-//
-//                    if (task.isSuccessful()) {
-//                        // Dapatkan URL gambar setelah berhasil diunggah
-//                        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-//                            String imageUrl = uri.toString();
-//                            // Lanjutkan dengan menggunakan URL gambar (imageUrl) sesuai kebutuhan Anda
-//                        });
-//                    } else {
-//                        Toast.makeText(EditActivity.this, "Upload failed: " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//    }
-//
-//}
+
+    private void backToProfile() {
+        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+        startActivity(intent);
+    }
 }

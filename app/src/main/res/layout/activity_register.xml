@@ -18,11 +18,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.024" />
 
+
     <TextView
         android:id="@+id/subtitle4"
         android:layout_width="250dp"
         android:layout_height="30dp"
-        android:layout_marginTop="192dp"
+        android:layout_marginTop="156dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="Silahkan registrasi terlebih dahulu!"
@@ -38,7 +39,7 @@
         android:id="@+id/subtitle5"
         android:layout_width="180dp"
         android:layout_height="30dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="128dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="Selamat Datang di"
@@ -46,7 +47,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.303"
+        app:layout_constraintHorizontal_bias="0.277"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,7 +56,7 @@
         android:id="@+id/subtitle"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="128dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="TRAVIEW"
@@ -63,16 +64,15 @@
         android:textSize="20sp"
         android:textStyle="bold|normal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.781"
+        app:layout_constraintHorizontal_bias="0.784"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <LinearLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="196dp"
+        android:layout_marginTop="172dp"
         android:orientation="vertical"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
                 android:hint="Masukkan Email..."
                 android:inputType="textEmailAddress"
                 android:paddingLeft="20dp"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,7 +133,7 @@
                 android:hint="min 8 karakter"
                 android:inputType="textPassword"
                 android:paddingLeft="20dp"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -163,7 +163,7 @@
                 android:hint="Ulangi Kata Sandi..."
                 android:inputType="textPassword"
                 android:paddingLeft="20dp"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -218,7 +218,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/content"
-        app:layout_constraintVertical_bias="0.117" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/subtitle3"
@@ -232,10 +232,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.657"
+        app:layout_constraintHorizontal_bias="0.681"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_google"
-        app:layout_constraintVertical_bias="0.238" />
+        app:layout_constraintVertical_bias="0.777" />
 
     <TextView
         android:id="@+id/subtitle2"
@@ -252,7 +252,7 @@
         app:layout_constraintHorizontal_bias="0.426"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_google"
-        app:layout_constraintVertical_bias="0.238" />
+        app:layout_constraintVertical_bias="0.777" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@
     tools:context=".AddReviewActivity">
 
     <ImageButton
-        android:id="@+id/icon_back"
+        android:id="@+id/ib_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/heading"
+        android:id="@+id/tv_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -27,11 +27,11 @@
         android:text="Buat Ulasan Lokasi"
         android:textColor="@color/bluePrimary"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/icon_back"
+        app:layout_constraintStart_toEndOf="@+id/ib_back"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/sub_heading"
+        android:id="@+id/tv_sub_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -39,11 +39,11 @@
         android:text="Silahkan isi ulasan dengan jujur!"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/icon_back"
-        app:layout_constraintTop_toBottomOf="@+id/heading" />
+        app:layout_constraintStart_toEndOf="@+id/ib_back"
+        app:layout_constraintTop_toBottomOf="@+id/tv_heading" />
 
     <TextView
-        android:id="@+id/label_foto"
+        android:id="@+id/tv_label_foto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -52,21 +52,21 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sub_heading" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_sub_heading" />
 
     <ImageView
-        android:id="@+id/review_photo"
+        android:id="@+id/iv_review_photo"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:contentDescription="image review"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_foto"
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_foto"
         app:srcCompat="@drawable/img_placeholder" />
 
     <Button
-        android:id="@+id/upload_img_button"
+        android:id="@+id/bt_upload_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -77,11 +77,11 @@
         android:text="Unggah Foto"
         android:textColor="@color/bluePrimary"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/review_photo"
-        app:layout_constraintTop_toBottomOf="@+id/label_foto" />
+        app:layout_constraintStart_toEndOf="@+id/iv_review_photo"
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_foto" />
 
     <TextView
-        android:id="@+id/message_btn"
+        android:id="@+id/tv_button_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -89,11 +89,11 @@
         android:text=".jpg .png max 5mb"
         android:textColor="@color/black"
         android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/review_photo"
-        app:layout_constraintTop_toBottomOf="@+id/upload_img_button" />
+        app:layout_constraintStart_toEndOf="@+id/iv_review_photo"
+        app:layout_constraintTop_toBottomOf="@+id/bt_upload_img" />
 
     <TextView
-        android:id="@+id/label_lokasi"
+        android:id="@+id/tv_label_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -102,10 +102,10 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/review_photo" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_review_photo" />
 
     <EditText
-        android:id="@+id/lokasi_inputfield"
+        android:id="@+id/et_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -121,10 +121,10 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_lokasi"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_location"/>
 
     <TextView
-        android:id="@+id/label_ulasan"
+        android:id="@+id/tv_label_ulasan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -133,10 +133,10 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lokasi_inputfield"/>
+        app:layout_constraintTop_toBottomOf="@+id/et_location"/>
 
     <EditText
-        android:id="@+id/ulasan_inputfield"
+        android:id="@+id/et_review"
         android:layout_width="match_parent"
         android:layout_height="132dp"
         android:layout_marginStart="24dp"
@@ -152,7 +152,7 @@
         android:paddingLeft="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_ulasan" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_ulasan" />
 
     <Button
         android:id="@+id/btn_submit"

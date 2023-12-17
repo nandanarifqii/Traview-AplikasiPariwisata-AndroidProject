@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "303625936534",
+    "firebase_url": "https://final-project-papb-4-f076f-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "final-project-papb-4-f076f",
     "storage_bucket": "final-project-papb-4-f076f.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.finalprojectpapb4"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "303625936534-9vni9j2tmpa21ao4i17shvkmgacaikqr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.finalprojectpapb4",
+            "certificate_hash": "4c9877affeadf0ec933659da37dd81656bb68c4e"
+          }
+        },
+        {
+          "client_id": "303625936534-covu26nmjc9piaa3r2vnvoa4qo66tqsn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD8-hz6KV5k0kN-fZ_wv-DIFzzqnq8bXvY"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "303625936534-covu26nmjc9piaa3r2vnvoa4qo66tqsn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

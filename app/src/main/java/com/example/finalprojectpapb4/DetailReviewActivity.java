@@ -2,43 +2,138 @@ package com.example.finalprojectpapb4;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 
 public class DetailReviewActivity extends AppCompatActivity {
-    private ImageButton backButton;
-    private ImageView reviewImageView;
-    private ImageButton downloadImageButton;
-    private ImageView userProfileImageView;
-    private TextView usernameTextView;
-    private TextView locationTextView;
-    private TextView dateTextView;
-    private TextView userReviewTextView;
+    private ImageButton btnBack;
+    private ImageView ivReviewImage;
+    private ImageButton ibDownloadImage;
+    private ImageView ivUserProfile;
+    private TextView tvUsername;
+    private TextView tvLocation;
+    private TextView tvDate;
+    private TextView tvReviewContent;
+    private StorageReference imageRef;
+
+    private Intent homeIntent;
+    private String location;
+    private String date;
+    private String userName;
+    private String review;
+    private String imageUri;
+    private String userId;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_review);
+    
+        homeIntent = getIntent();
+        location = homeIntent.getStringExtra("location");
+        date = homeIntent.getStringExtra("date");
+        userId = homeIntent.getStringExtra("userId");
+        userName = homeIntent.getStringExtra("userName");
+        review = homeIntent.getStringExtra("review");
+        imageUri = homeIntent.getStringExtra("imageUri");
 
-        backButton = findViewById(R.id.icon_back);
-        reviewImageView = findViewById(R.id.review_photo);
-        downloadImageButton = findViewById(R.id.download_fab);
-        userProfileImageView = findViewById(R.id.user_profile_pic);
-        usernameTextView = findViewById(R.id.username);
-        locationTextView = findViewById(R.id.location);
-        dateTextView = findViewById(R.id.date);
-        userReviewTextView = findViewById(R.id.user_review);
+        btnBack = findViewById(R.id.ib_back);
+        ivReviewImage = findViewById(R.id.iv_review_photo);
+        ibDownloadImage = findViewById(R.id.ib_download_image);
+        ivUserProfile = findViewById(R.id.iv_user_profile_pic);
+        tvUsername = findViewById(R.id.et_edit_username);
+        tvLocation = findViewById(R.id.tv_location);
+        tvDate = findViewById(R.id.tv_detail_review_date);
+        tvReviewContent = findViewById(R.id.tv_review_content);
 
-        backButton.setOnClickListener(_view -> {
-            Intent intent = new Intent(DetailReviewActivity.this, HomeActivity.class);
+        storageRef = storage.getReferenceFromUrl(imageUri);
+
+        tvUsername.setText(userName);
+        tvLocation.setText(location);
+        tvDate.setText(date);
+        tvReviewContent.setText(review);
+        Log.d("DetailReviewActivity", "Image URL: " + imageUri);
+
+        if (imageUri != null) {
+            Glide.with(this).load(imageUri).into(ivReviewImage);
+            ibDownloadImage.setOnClickListener(view -> {
+                downloadImage();
+            });
+        } else {
+            Toast.makeText(this, "Image URL is null", Toast.LENGTH_SHORT).show();
+
+        }
+
+
+
+        btnBack.setOnClickListener(_view -> {
+//            finish();
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
         });
     }
+
+    private void downloadImage() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            if (isValidFirebaseStorageUri(imageUri)) {
+                File directory = Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                // Generate a unique filename based on timestamp
+                String timestamp = String.valueOf(System.currentTimeMillis());
+                File localFile = new File(directory, "downloaded_image_" + timestamp + ".jpg");
+
+                Log.d("DownloadImage", "Local file path: " + localFile.getAbsolutePath());
+
+                storageRef.getFile(localFile).addOnSuccessListener(taskSnapshot -> {
+                    Toast.makeText(getApplicationContext(),
+                            "Image Downloaded",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }).addOnFailureListener(exception -> {
+                    Toast.makeText(getApplicationContext(),
+                            "Failed to download image: " + exception.getMessage(),
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    exception.printStackTrace(); // Log the exception details
+                });
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "Invalid Firebase Storage URL",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "External storage not available",
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
+    }
+
+    private boolean isValidFirebaseStorageUri(String uri) {
+        try {
+            // Attempt to create a StorageReference, if successful, consider it a valid Firebase Storage URL
+            FirebaseStorage.getInstance().getReferenceFromUrl(uri);
+            return true;
+        } catch (IllegalArgumentException e) {
+            // If an exception is caught, it is not a valid Firebase Storage URL
+            return false;
+        }
+    }
+
 }

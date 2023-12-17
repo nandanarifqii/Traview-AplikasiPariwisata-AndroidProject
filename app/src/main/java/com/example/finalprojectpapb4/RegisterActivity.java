@@ -2,28 +2,26 @@ package com.example.finalprojectpapb4;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -47,20 +45,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Set onClickListener untuk tombol daftar
         Button registerButton = findViewById(R.id.btn_login);
-        registerButton.setOnClickListener(view -> registerUser());
-//        registerButton.setOnClickListener(_view -> {
-//            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-//            startActivity(intent);
-//        });
+        registerButton.setOnClickListener(_view -> registerUser());
 
         // Set onClickListener untuk tombol Google Sign-In
         Button googleSignInButton = findViewById(R.id.btn_google);
-        googleSignInButton.setOnClickListener(view -> signInWithGoogle());
+        googleSignInButton.setOnClickListener(_view -> signInWithGoogle());
 
         // Set onClickListener untuk teks "Masuk"
         TextView masukTextView = findViewById(R.id.subtitle3);
         masukTextView.setOnClickListener(view -> {
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
         });
     }
@@ -81,13 +75,18 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+                        createUsernameAndName();
+
                         // Registrasi berhasil, alihkan ke MainActivity
-                        startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                        startActivity(
+                                new Intent(getApplicationContext(), HomeActivity.class));
                         finish();
                     } else {
                         // Registrasi gagal, tampilkan pesan kesalahan
-                        Toast.makeText(RegisterActivity.this, "Registrasi gagal: " + task.getException().getMessage(),
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),
+                                "Registrasi gagal: " + task.getException().getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 });
     }
@@ -97,19 +96,29 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (password.isEmpty()) {
             // Handle empty password
-            Toast.makeText(RegisterActivity.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Password cannot be empty",
+                    Toast.LENGTH_SHORT
+            ).show();
             return false;
         }
 
         if (password.length() < 8) {
             // Handle password tidak valid
-            Toast.makeText(RegisterActivity.this, "Password minimum 8 character", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),
+                    "Password minimum 8 character",
+                    Toast.LENGTH_SHORT
+            ).show();
             return false;
         }
 
         if (!password.equals(confirmPassword)) {
             // Handle konfirmasi password tidak sesuai
-            Toast.makeText(RegisterActivity.this, "Password confirmation does not match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),
+                    "Password confirmation does not match",
+                    Toast.LENGTH_SHORT
+            ).show();
             return false;
         }
 
@@ -130,11 +139,17 @@ public class RegisterActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In berhasil, autentikasi ke Firebase
-                GoogleSignInAccount account = (GoogleSignInAccount) ((Task<?>) task).getResult(ApiException.class);
+                GoogleSignInAccount account = (GoogleSignInAccount) ((Task<?>) task)
+                        .getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In gagal, tampilkan pesan kesalahan
-                Toast.makeText(this, "Google Sign In failed: " + GoogleSignInStatusCodes.getStatusCodeString(e.getStatusCode()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        String.format(
+                                "Google Sign In failed: %s",
+                                GoogleSignInStatusCodes.getStatusCodeString(e.getStatusCode())),
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         }
     }
@@ -146,12 +161,36 @@ public class RegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Autentikasi berhasil, alihkan atau lakukan operasi lainnya
                         FirebaseUser user = mAuth.getCurrentUser();
-                        Toast.makeText(this, "Authentication successful.", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                        createUsernameAndName();
+                        Toast.makeText(getApplicationContext(),
+                                "Authentication successful.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     } else {
                         // Autentikasi gagal, tampilkan pesan kesalahan
-                        Toast.makeText(this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),
+                                "Authentication failed: " + task.getException().getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 });
+    }
+
+    private void createUsernameAndName() {
+        DatabaseReference userReference = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("user_profiles");
+
+        String defaultValue = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        defaultValue = defaultValue.substring(0, defaultValue.indexOf("@"));
+
+        userReference
+                .child(FirebaseAuth
+                        .getInstance()
+                        .getCurrentUser()
+                        .getUid()
+                ).setValue(new UserModel(defaultValue, defaultValue));
     }
 }
