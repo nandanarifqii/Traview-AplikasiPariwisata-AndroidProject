@@ -49,4 +49,5 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview")
     implementation("com.google.firebase:firebase-database:20.3.0")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 }
