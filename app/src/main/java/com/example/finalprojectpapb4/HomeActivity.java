@@ -60,11 +60,13 @@ public class HomeActivity extends AppCompatActivity implements IOnItemClickListe
                     return true;
                 } else if (item.getItemId() == R.id.menu_profile) {
                     if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                        Intent intent =
+                                new Intent(HomeActivity.this, LoginActivity.class);
                         startActivity(intent);
                         return true;
                     } else {
-                        Intent profileIntent = new Intent(HomeActivity.this, ProfileActivity.class);
+                        Intent profileIntent =
+                                new Intent(HomeActivity.this, ProfileActivity.class);
                         startActivity(profileIntent);
                         return true;
                     }
