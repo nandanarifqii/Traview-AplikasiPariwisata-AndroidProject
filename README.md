@@ -7,7 +7,7 @@ Hambatan utamanya adalah kurangnya promosi dan informasi yang memadai. Dengan 80
 diperlukan sumber informasi yang akurat untuk meningkatkan pengalaman wisatawan dan memaksimalkan kunjungan.
 
 ## Solusi 
-Kelompok kamu mengusulkan pembuatan aplikasi mobile pariwisata untuk meningkatkan promosi, menyediakan informasi lengkap dan akurat, 
+Kelompok kami mengusulkan pembuatan aplikasi mobile pariwisata untuk meningkatkan promosi, menyediakan informasi lengkap dan akurat, 
 serta mengurangi kesenjangan antara destinasi populer dan yang belum terkenal. Aplikasi ini memungkinkan pengguna mengunggah pengalaman 
 wisata yang bisa dilihat oleh orang lain, serta mempromosikan destinasi yang kurang dikenal. Informasi dalam bentuk teks dan gambar
 akan memudahkan wisatawan merencanakan perjalanan, meningkatkan kenyamanan dan kepuasan mereka.
